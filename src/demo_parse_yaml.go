@@ -73,7 +73,7 @@ func main() {
 		log.Fatalf("cannot unmarshal data: %v", err)
 	}
 
-	log.Println("yamlFile:", yamlFile)
+	//log.Println("yamlFile:", yamlFile)
 
 	m := make(map[string]interface{})
 
