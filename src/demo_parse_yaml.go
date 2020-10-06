@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"gopkg.in/yaml.v2"
+	"io/ioutil"
+	"log"
 
 	"reflect"
 	"strings"
@@ -50,7 +52,7 @@ func printSlice(slc []interface{}, depth int) {
 	}
 }
 
-func main() {
+func main1() {
 	m := make(map[string]interface{})
 
 	err := yaml.Unmarshal([]byte(data), &m)
@@ -61,4 +63,27 @@ func main() {
 		fmt.Printf("Key:%s ", k)
 		printVal(v, 1)
 	}
+}
+
+
+func main() {
+
+	yamlFile, err := ioutil.ReadFile("/home/dragon/workspace_edgex/edgex-developer_scripts/releases/edinburgh/compose-files/modbus/res/example/modbus.test.device.profile.yml")
+	if err != nil {
+		log.Fatalf("cannot unmarshal data: %v", err)
+	}
+
+	log.Println("yamlFile:", yamlFile)
+
+	m := make(map[string]interface{})
+
+	err = yaml.Unmarshal([]byte(yamlFile), &m)
+	if err != nil {
+		panic(err)
+	}
+	for k, v := range m {
+		fmt.Printf("Key:%s ", k)
+		printVal(v, 1)
+	}
+
 }
