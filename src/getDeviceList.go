@@ -46,23 +46,24 @@ func getHttpRes(url string) []uint8 {
 
 func getCommands(body []uint8) {
 
-	classmate := gjson.Get(str, "commands")
+	body = body[1 : len(body)-1]
+	result := gjson.Get(string(body), "commands")
 
-	if classmate.IsArray() {
-		fmt.Println(classmate.Array()[0])
-		fmt.Println(classmate.Array()[1])
-		fmt.Println(classmate.Array()[2])
+	fmt.Println(reflect.TypeOf(result))
+
+	if result.IsArray() {
+		result.ForEach(func(key, value gjson.Result) bool {
+			fmt.Println(key, value)
+			return true
+		})
 	}
-
 }
 
 func OperatingPlatform() {
 	//sendHttpRequest("http://localhost:48082/api/v1/device")
 	res := getHttpRes("http://localhost:48082/api/v1/device")
-	fmt.Println(string(res))
 
 	getCommands(res)
-
 }
 
 func main() {
