@@ -52,13 +52,18 @@ func getCommands(body []uint8) {
 	result := gjson.Get(string(body), "commands")
 
 	fmt.Println(reflect.TypeOf(result))
+	fmt.Println(result.IsArray())
+
+	count := 0
 
 	if result.IsArray() {
 		for _, name := range result.Array() {
 			println(name.String())
+			count++
 		}
 	}
 
+	fmt.Println("array count is :", count)
 }
 
 func OperatingPlatform() {
