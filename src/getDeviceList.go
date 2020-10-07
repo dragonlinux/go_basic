@@ -59,14 +59,6 @@ func getCommands(body []uint8) {
 		}
 	}
 
-	fmt.Println("============")
-
-	if result.IsArray() {
-		result.ForEach(func(key, value gjson.Result) bool {
-			fmt.Println(key, value)
-			return true
-		})
-	}
 }
 
 func OperatingPlatform() {
