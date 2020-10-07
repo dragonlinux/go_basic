@@ -46,10 +46,20 @@ func getHttpRes(url string) []uint8 {
 
 func getCommands(body []uint8) {
 
-	body = body[1 : len(body)-1]
+	{ //所以这么做，是因为原来的字符串最外层是array，去掉就是object了
+		body = body[1 : len(body)-1]
+	}
 	result := gjson.Get(string(body), "commands")
 
 	fmt.Println(reflect.TypeOf(result))
+
+	if result.IsArray() {
+		for _, name := range result.Array() {
+			println(name.String())
+		}
+	}
+
+	fmt.Println("============")
 
 	if result.IsArray() {
 		result.ForEach(func(key, value gjson.Result) bool {
