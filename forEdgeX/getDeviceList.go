@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/tidwall/gjson"
 	"io/ioutil"
 	"net/http"
 	"reflect"
@@ -44,6 +45,14 @@ func getHttpRes(url string) []uint8 {
 }
 
 func getCommands(body []uint8) {
+
+	classmate := gjson.Get(str, "commands")
+
+	if classmate.IsArray() {
+		fmt.Println(classmate.Array()[0])
+		fmt.Println(classmate.Array()[1])
+		fmt.Println(classmate.Array()[2])
+	}
 
 }
 
