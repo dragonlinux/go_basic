@@ -6,13 +6,13 @@ import (
 	"time"
 )
 
-var COUNT int
+var countDemoTime int
 
 func hello() {
 	fmt.Println("Hello world goroutine")
 	for {
-		count++
-		fmt.Println("Hello world goroutine ", COUNT)
+		countDemoTime++
+		fmt.Println("Hello world goroutine ", countDemoTime)
 		time.Sleep(1000 * time.Millisecond)
 	}
 }

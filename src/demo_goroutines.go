@@ -5,17 +5,6 @@ import (
 	"time"
 )
 
-var COUNT int
-
-func hello() {
-	fmt.Println("Hello world goroutine")
-	for {
-		count++
-		fmt.Println("Hello world goroutine ", COUNT)
-		time.Sleep(10 * time.Millisecond)
-	}
-}
-
 func helloInt(i int) {
 	fmt.Println("Hello world goroutine", i)
 	for {
@@ -47,7 +36,6 @@ func main() {
 		go helloString(str)
 	}
 
-	dragon = 1
 	fmt.Println("main function")
 	select {}
 
