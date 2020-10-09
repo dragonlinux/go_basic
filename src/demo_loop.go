@@ -4,14 +4,14 @@ import (
 	"fmt"
 )
 
-func loop_simple() {
+func loopSimple() {
 	for i := 0; i < 8; i++ {
 		fmt.Println(i)
 	}
 	return
 }
 
-func loop_key_value() {
+func loopKeyValue() {
 	m := make(map[string]string)
 	m["a"] = "alpha"
 	m["b"] = "beta"
@@ -23,8 +23,8 @@ func loop_key_value() {
 }
 
 func main() {
-	loop_simple()
-
-	loop_key_value()
+	loopSimple()
+	fmt.Println("========")
+	loopKeyValue()
 
 }
