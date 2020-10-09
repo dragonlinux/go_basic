@@ -17,4 +17,13 @@ func main() {
 		fmt.Println(classmate.Array()[1])
 		fmt.Println(classmate.Array()[2])
 	}
+
+	fmt.Println("=========> 遍历方法")
+
+	if classmate.IsArray() {
+		for _, name := range classmate.Array() {
+			println(name.String())
+		}
+	}
+
 }
