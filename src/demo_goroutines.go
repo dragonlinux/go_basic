@@ -2,33 +2,53 @@ package main
 
 import (
 	"fmt"
-	"reflect"
 	"time"
 )
 
-var count int
+var COUNT int
 
 func hello() {
 	fmt.Println("Hello world goroutine")
 	for {
 		count++
-		fmt.Println("Hello world goroutine ", count)
-		time.Sleep(1000 * time.Millisecond)
+		fmt.Println("Hello world goroutine ", COUNT)
+		time.Sleep(10 * time.Millisecond)
 	}
 }
+
+func helloInt(i int) {
+	fmt.Println("Hello world goroutine", i)
+	for {
+		time.Sleep(10 * time.Millisecond)
+	}
+}
+
+func helloString(str string) {
+	fmt.Println("Hello world goroutine", str)
+	for {
+		time.Sleep(10 * time.Millisecond)
+	}
+}
+
 func main() {
-	start := time.Now()
 
-	go hello()
-	go hello()
+	z := 1
+	if z == 0 {
+		i := 0
+		go helloInt(i)
+		i = 1
+		go helloInt(i)
+	}
 
-	t := time.Now()
+	{
+		str := "dragon"
+		go helloString(str)
+		str = "linux"
+		go helloString(str)
+	}
 
-	fmt.Println("main function", reflect.TypeOf(t))
-
-	elapsed := t.Sub(start)
-
-	fmt.Println("main function", elapsed)
+	dragon = 1
+	fmt.Println("main function")
 	select {}
 
 }

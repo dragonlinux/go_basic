@@ -26,8 +26,22 @@ func testVariable() {
 
 }
 
+func setValue() {
+	{
+		var x int = 8
+		fmt.Println(x)
+	}
+
+	{
+		var x, y int = 1, 2
+		fmt.Println(x, y)
+	}
+
+}
+
 func main() {
 
 	testVariable()
+	setValue()
 
 }
