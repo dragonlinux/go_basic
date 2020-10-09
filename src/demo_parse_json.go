@@ -22,7 +22,9 @@ func json2Map() {
 	jsonStr := `
     {
         "name":"dragonlinux",
-        "age":55
+        "age":555,
+        "name1":"ruihan",
+        "age2":555
     }
     `
 	var mapResult map[string]interface{}
