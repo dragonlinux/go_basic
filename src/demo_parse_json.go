@@ -33,6 +33,7 @@ func json2Map() {
 		fmt.Println(err)
 	}
 	fmt.Println(mapResult)
+	fmt.Println(mapResult["name1"])
 }
 
 func main() {
