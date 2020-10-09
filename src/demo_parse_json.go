@@ -21,8 +21,8 @@ func json2Struct() {
 func json2Map() {
 	jsonStr := `
     {
-        "name":"liangyongxing",
-        "age":12
+        "name":"dragonlinux",
+        "age":55
     }
     `
 	var mapResult map[string]interface{}
