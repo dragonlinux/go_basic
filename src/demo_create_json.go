@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+//struct to json
 func createJsonMethod1() {
 	// Profile declares `Profile` structure
 	type Data struct {
@@ -33,6 +34,30 @@ func createJsonMethod1() {
 	fmt.Println(string(johnJSON))
 }
 
+//map to json
+func createJsonMethod2() {
+	type Foo struct {
+		Number int    `json:"number"`
+		Title  string `json:"title"`
+	}
+
+	datas := make(map[int]Foo)
+
+	for i := 0; i < 10; i++ {
+		datas[i] = Foo{Number: 1, Title: "test"}
+	}
+
+	jsonString, err := json.Marshal(datas)
+
+	fmt.Println(datas)
+	fmt.Println(err)
+
+	//fmt.Println(jsonString)
+	fmt.Println(string(jsonString))
+
+}
+
 func main() {
 	createJsonMethod1()
+	createJsonMethod2()
 }
