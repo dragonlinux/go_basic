@@ -29,7 +29,7 @@ func createJsonMethod1() {
 	}
 
 	// encode `john` as JSON
-	johnJSON, _ := json.MarshalIndent(frame, "", "  ")
+	johnJSON, _ := json.MarshalIndent(frame, "", "\t")
 	fmt.Println(string(johnJSON))
 }
 
