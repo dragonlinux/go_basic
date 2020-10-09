@@ -6,7 +6,7 @@ import (
 )
 
 //struct to json
-func createJsonMethod1() {
+func createJson_Struct2Json() {
 	// Profile declares `Profile` structure
 	type Data struct {
 		Infrared int `json:"infrared"`
@@ -35,7 +35,7 @@ func createJsonMethod1() {
 }
 
 //map to json
-func createJsonMethod2() {
+func createJson_Map2Json() {
 	type Foo struct {
 		Number int    `json:"number"`
 		Title  string `json:"title"`
@@ -58,6 +58,6 @@ func createJsonMethod2() {
 }
 
 func main() {
-	createJsonMethod1()
-	createJsonMethod2()
+	createJson_Struct2Json()
+	createJson_Map2Json()
 }
