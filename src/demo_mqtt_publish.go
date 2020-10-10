@@ -14,7 +14,7 @@ const (
 	password   = "public"
 )
 
-func main() {
+func mqttPublish() {
 	var mqttClientId = "ClientID"
 	var qos = byte(0)
 	var topic = "DataTopic"
@@ -50,9 +50,13 @@ func main() {
 		//fmt.Println(fmt.Sprintf("Send response: %v", string(jsonData)))
 		fmt.Println(fmt.Sprintf("Send response: %v", (tempData)))
 
-		time.Sleep(time.Second * time.Duration(30))
-	}
+		time.Sleep(1000 * time.Millisecond)
 
+	}
+}
+
+func main() {
+	mqttPublish()
 }
 
 func createMqttClient(clientID string, uri *url.URL) (mqtt.Client, error) {
