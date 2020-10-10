@@ -62,6 +62,8 @@ func operator() {
 }
 
 func main() {
+	//mosquitto_pub -h 192.168.1.190 -t "DataTopic" -m "Hello MQTT1"
+	//mosquitto_sub -h 192.168.1.190 -t "DataTopic" -v
 	operator()
 }
 

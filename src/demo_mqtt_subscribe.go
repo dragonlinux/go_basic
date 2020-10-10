@@ -87,6 +87,8 @@ func operator_subscribe() {
 }
 
 func main() {
+	//mosquitto_pub -h 192.168.1.190 -t "DataTopic" -m "Hello MQTT1"
+	//mosquitto_sub -h 192.168.1.190 -t "DataTopic" -v
 	operator_subscribe()
 	//runCommandHandler(1)
 }
