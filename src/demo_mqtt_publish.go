@@ -41,7 +41,7 @@ func mqttPublish(content string) {
 func forLoop(i int) {
 	for {
 		mqttPublish(fmt.Sprintf("%v", i))
-		time.Sleep(1000 * time.Millisecond)
+		time.Sleep(100 * time.Millisecond)
 	}
 }
 
@@ -73,15 +73,16 @@ func createMqttClient(clientID string, uri *url.URL) (mqtt.Client, error) {
 	opts.SetUsername(uri.User.Username())
 	password, _ := uri.User.Password()
 	opts.SetPassword(password)
-	opts.SetConnectionLostHandler(func(client mqtt.Client, e error) {
-		fmt.Println(fmt.Sprintf("Connection lost : %v", e))
-		token := client.Connect()
-		if token.Wait() && token.Error() != nil {
-			fmt.Println(fmt.Sprintf("Reconnection failed : %v", e))
-		} else {
-			fmt.Println(fmt.Sprintf("Reconnection sucessful : %v", e))
-		}
-	})
+
+	//opts.SetConnectionLostHandler(func(client mqtt.Client, e error) {
+	//	fmt.Println(fmt.Sprintf("Connection lost : %v", e))
+	//	token := client.Connect()
+	//	if token.Wait() && token.Error() != nil {
+	//		fmt.Println(fmt.Sprintf("Reconnection failed : %v", e))
+	//	} else {
+	//		fmt.Println(fmt.Sprintf("Reconnection sucessful : %v", e))
+	//	}
+	//})
 
 	client := mqtt.NewClient(opts)
 	token := client.Connect()
