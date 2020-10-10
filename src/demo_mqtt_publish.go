@@ -39,7 +39,7 @@ func mqttPublish(content string) {
 }
 
 func main() {
-	mqttPublish("{\"datatype\":1,\"datas\":{\"mensuo123\":11,\"weidong123\":22,\"hongwai123\":33,\"yanwu123\":44},\"msgid\":14317}")
+	mqttPublish("dragonlinux")
 }
 
 func createMqttClient(clientID string, uri *url.URL) (mqtt.Client, error) {
