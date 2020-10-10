@@ -7,14 +7,12 @@ import (
 	"time"
 )
 
-const (
-	brokerUrl  = "192.168.1.190"
-	brokerPort = 1883
-	username   = "admin"
-	password   = "public"
-)
-
 func mqttPublish(content string) {
+
+	var brokerUrl = "192.168.1.190"
+	var brokerPort = 1883
+	var username = "admin"
+	var password = "public"
 	var mqttClientId = "ClientID"
 	var qos = byte(0)
 	var topic = "DataTopic"
