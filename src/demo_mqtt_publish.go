@@ -32,7 +32,7 @@ func mqttPublish(content string) {
 	for {
 		client.Publish(topic, qos, false, content)
 
-		fmt.Println(fmt.Sprintf("Send response: %v", (content)))
+		fmt.Println(fmt.Sprintf("Send response: %v", content))
 
 		time.Sleep(1000 * time.Millisecond)
 	}
