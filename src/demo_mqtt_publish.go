@@ -29,27 +29,12 @@ func mqttPublish(content string) {
 		fmt.Println(err)
 	}
 
-	//var data = make(map[string]interface{})
-	//data["name"] = "MQTT test device"
-	//data["cmd"] = "randnum"
-	//data["method"] = "get"
-
 	for {
-		//data["randnum"] = rand.Float64()
-		//jsonData, err := json.Marshal(data)
-		//if err != nil {
-		//	fmt.Println(err)
-		//}
+		client.Publish(topic, qos, false, content)
 
-		var tempData = content
-		//client.Publish(topic, qos, false, jsonData)
-		client.Publish(topic, qos, false, tempData)
-
-		//fmt.Println(fmt.Sprintf("Send response: %v", string(jsonData)))
-		fmt.Println(fmt.Sprintf("Send response: %v", (tempData)))
+		fmt.Println(fmt.Sprintf("Send response: %v", (content)))
 
 		time.Sleep(1000 * time.Millisecond)
-
 	}
 }
 
