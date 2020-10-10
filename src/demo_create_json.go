@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"math/rand"
 )
 
 //struct to json
@@ -57,7 +58,23 @@ func createJson_Map2Json() {
 
 }
 
+func createJson_Map2Json_type2() {
+	var data = make(map[string]interface{})
+	data["name"] = "MQTT test device"
+	data["cmd"] = "randnum"
+	data["method"] = "get"
+	data["randnum"] = rand.Float64()
+
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(string(jsonData))
+}
+
 func main() {
 	createJson_Struct2Json()
 	createJson_Map2Json()
+	createJson_Map2Json_type2()
+
 }
