@@ -90,6 +90,8 @@ func Put() {
 
 func main() {
 	//nc -l 12345
+	//ref:
+	//https://blog.csdn.net/xiaoyida11/article/details/82659017
 
 	sendHttpReq()
 	Get()
