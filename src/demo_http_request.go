@@ -7,7 +7,7 @@ import (
 	"reflect"
 )
 
-func main() {
+func sendHttpReq() {
 	resp, err := http.Get("http://dragonlinux.cn/myip")
 
 	if err != nil {
@@ -20,5 +20,14 @@ func main() {
 
 	fmt.Println("--->", reflect.TypeOf(body))
 	fmt.Println("--->", body)
+	fmt.Printf("--->%s", body)
+}
 
+func sendHttpReqWithJsonBody() {
+
+}
+
+
+func main() {
+	sendHttpReq()
 }

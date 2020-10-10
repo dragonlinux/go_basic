@@ -14,7 +14,7 @@ func mqttPublish(content string) {
 	var username = "admin"
 	var password = "public"
 	var mqttClientId = "ClientID"
-	var qos = byte(0)
+	var qos = byte(1)
 	var topic = "DataTopic"
 
 	uri := &url.URL{
@@ -29,17 +29,40 @@ func mqttPublish(content string) {
 		fmt.Println(err)
 	}
 
+	//for {
+	client.Publish(topic, qos, false, content)
+
+	fmt.Println(fmt.Sprintf("Send response: %v", content))
+
+	//time.Sleep(1000 * time.Millisecond)
+	//}
+}
+
+func forLoop(i int) {
 	for {
-		client.Publish(topic, qos, false, content)
-
-		fmt.Println(fmt.Sprintf("Send response: %v", content))
-
+		mqttPublish(fmt.Sprintf("%v", i))
 		time.Sleep(1000 * time.Millisecond)
 	}
 }
 
+//以下两种情况皆有问题,so goroutine negative.
+func operator() {
+	for i := 0; i < 5; i++ {
+		go forLoop(i)
+		//select {}
+	}
+
+	//go forLoop(1)
+	//go forLoop(2)
+	//go forLoop(3)
+	//go forLoop(4)
+	//go forLoop(5)
+
+	select {}
+}
+
 func main() {
-	mqttPublish("dragonlinux")
+	operator()
 }
 
 func createMqttClient(clientID string, uri *url.URL) (mqtt.Client, error) {
