@@ -14,7 +14,7 @@ const (
 	password   = "public"
 )
 
-func mqttPublish() {
+func mqttPublish(content string) {
 	var mqttClientId = "ClientID"
 	var qos = byte(0)
 	var topic = "DataTopic"
@@ -43,7 +43,7 @@ func mqttPublish() {
 		//	fmt.Println(err)
 		//}
 
-		var tempData = "{\"datatype\":1,\"datas\":{\"mensuo123\":11,\"weidong123\":22,\"hongwai123\":33,\"yanwu123\":44},\"msgid\":14317}"
+		var tempData = content
 		//client.Publish(topic, qos, false, jsonData)
 		client.Publish(topic, qos, false, tempData)
 
@@ -56,7 +56,7 @@ func mqttPublish() {
 }
 
 func main() {
-	mqttPublish()
+	mqttPublish("{\"datatype\":1,\"datas\":{\"mensuo123\":11,\"weidong123\":22,\"hongwai123\":33,\"yanwu123\":44},\"msgid\":14317}")
 }
 
 func createMqttClient(clientID string, uri *url.URL) (mqtt.Client, error) {
