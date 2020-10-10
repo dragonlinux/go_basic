@@ -2,20 +2,20 @@ package main
 
 import (
 	"fmt"
+	"github.com/eclipse/paho.mqtt.golang"
 	"net/url"
 	"time"
-	"github.com/eclipse/paho.mqtt.golang"
 )
 
 const (
-	brokerUrl  = "192.168.1.200"
+	brokerUrl  = "192.168.1.190"
 	brokerPort = 1883
 	username   = "admin"
 	password   = "public"
 )
 
-func main()  {
-	var mqttClientId = "IncomingDataPublisher"
+func main() {
+	var mqttClientId = "ClientID"
 	var qos = byte(0)
 	var topic = "DataTopic"
 
