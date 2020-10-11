@@ -75,7 +75,7 @@ func onCommandReceivedFromBroker(client mqtt.Client, message mqtt.Message) {
 }
 
 //以下两种情况皆有问题,so goroutine negative.
-func operator_subscribe() {
+func operator() {
 	for i := 0; i < 10; i++ {
 		fmt.Println("--->", i)
 		go runCommandHandler(i)
@@ -90,6 +90,6 @@ func operator_subscribe() {
 func main() {
 	//mosquitto_pub -h 192.168.1.190 -t "DataTopic" -m "Hello MQTT1"
 	//mosquitto_sub -h 192.168.1.190 -t "DataTopic" -v
-	operator_subscribe()
+	operator()
 	//runCommandHandler(1)
 }
