@@ -24,7 +24,7 @@ func runCommandHandler(i int) {
 	}
 
 	//client, err := createMqttClient_subscribe(mqttClientId, uri)
-	client, err := mymqtt.CreateMqttClient(fmt.Sprintf("%v", i), uri) //id必须要不一样才能正常接收
+	client, err := mymqtt.CreateMqttClientSubscribe(fmt.Sprintf("%v", i), uri) //id必须要不一样才能正常接收
 	defer client.Disconnect(5000)
 	if err != nil {
 		fmt.Println(err)
