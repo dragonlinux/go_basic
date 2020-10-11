@@ -9,7 +9,7 @@ import (
 )
 
 func sendHttpRequest(url string) {
-	//resp, err := http.Get("http://dragonlinux.cn/myip")
+	//resp, err := http.SendGet("http://dragonlinux.cn/myip")
 	resp, err := http.Get(url)
 
 	if err != nil {

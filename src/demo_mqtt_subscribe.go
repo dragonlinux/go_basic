@@ -3,12 +3,13 @@ package main
 import (
 	"fmt"
 	"github.com/eclipse/paho.mqtt.golang"
+	"go_basic/mymqtt"
 	"net/url"
 )
 
 func runCommandHandler(i int) {
 
-	var brokerUrl = "192.168.1.190"
+	var brokerUrl = "192.168.1.80"
 	var brokerPort = 1883
 	var username = "admin"
 	var password = "public"
@@ -23,7 +24,7 @@ func runCommandHandler(i int) {
 	}
 
 	//client, err := createMqttClient_subscribe(mqttClientId, uri)
-	client, err := createMqttClient_subscribe(fmt.Sprintf("%v", i), uri) //id必须要不一样才能正常接收
+	client, err := mymqtt.CreateMqttClient(fmt.Sprintf("%v", i), uri) //id必须要不一样才能正常接收
 	defer client.Disconnect(5000)
 	if err != nil {
 		fmt.Println(err)
@@ -91,32 +92,4 @@ func main() {
 	//mosquitto_sub -h 192.168.1.190 -t "DataTopic" -v
 	operator_subscribe()
 	//runCommandHandler(1)
-}
-
-func createMqttClient_subscribe(clientID string, uri *url.URL) (mqtt.Client, error) {
-	fmt.Println(fmt.Sprintf("Create MQTT client and connection: uri=%v clientID=%v ", uri.String(), clientID))
-	opts := mqtt.NewClientOptions()
-	opts.AddBroker(fmt.Sprintf("%s://%s", uri.Scheme, uri.Host))
-	opts.SetClientID(clientID)
-	opts.SetUsername(uri.User.Username())
-	password, _ := uri.User.Password()
-	opts.SetPassword(password)
-
-	opts.SetConnectionLostHandler(func(client mqtt.Client, e error) {
-		fmt.Println(fmt.Sprintf("Connection lost : %v", e))
-		token := client.Connect()
-		if token.Wait() && token.Error() != nil {
-			fmt.Println(fmt.Sprintf("Reconnection failed : %v", e))
-		} else {
-			fmt.Println(fmt.Sprintf("Reconnection sucessful : %v", e))
-		}
-	})
-
-	client := mqtt.NewClient(opts)
-	token := client.Connect()
-	if token.Wait() && token.Error() != nil {
-		return client, token.Error()
-	}
-
-	return client, nil
 }
