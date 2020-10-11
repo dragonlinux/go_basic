@@ -25,10 +25,9 @@ func sendHttpReq() {
 	fmt.Printf("--->%s", body)
 }
 
-func Get() {
-	url := "http://192.168.1.190:12345"
+func Get(url string, strBody string) {
 
-	bodyBuf := bytes.NewBuffer([]byte("dragonlinux"))
+	bodyBuf := bytes.NewBuffer([]byte(strBody))
 
 	//req, _ := http.NewRequest("GET", url, nil)
 	req, _ := http.NewRequest("GET", url, bodyBuf)
@@ -45,12 +44,11 @@ func Get() {
 
 }
 
-func Post() {
+func Post(url string, strBody string) {
 
 	//url := "http://xxxxx:8080/v2/repos/wh_flowDataSource1/data"
-	url := "http://192.168.1.190:12345"
 
-	payload := strings.NewReader("a=111")
+	payload := strings.NewReader(strBody)
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -68,10 +66,9 @@ func Post() {
 
 }
 
-func Put() {
-	url := "http://192.168.1.190:12345"
+func Put(url string, strBody string) {
 
-	payload := strings.NewReader("dragonlinux")
+	payload := strings.NewReader(strBody)
 
 	req, _ := http.NewRequest("PUT", url, payload)
 
@@ -94,7 +91,7 @@ func main() {
 	//https://blog.csdn.net/xiaoyida11/article/details/82659017
 
 	sendHttpReq()
-	Get()
-	Post()
-	Put()
+	Get("http://192.168.1.66:12345", "dragonlinux")
+	Post("http://192.168.1.66:12345", "dragonlinux")
+	Put("http://192.168.1.66:12345", "dragonlinux")
 }
