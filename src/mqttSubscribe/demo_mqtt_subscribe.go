@@ -78,20 +78,16 @@ func thingsBoardrunCommandHandler(i int) {
 
 	var brokerUrl = "192.168.1.189"
 	var brokerPort = 1883
-	//var username = "admin"
 	var username = "XJyR2Cn0ttnVKhe5GL4w"
-
-	//var password = "public"
+	var password = ""
 	//var mqttClientId = "sub"
 	var qos = 1
-	//var topic = "DataTopic"
 	var topic = "v1/devices/me/rpc/request/+"
 
 	uri := &url.URL{
 		Scheme: "tcp",
 		Host:   fmt.Sprintf("%s:%d", brokerUrl, brokerPort),
-		//User:   url.UserPassword(username, password),
-		User: url.UserPassword(username, ""),
+		User:   url.UserPassword(username, password),
 	}
 
 	//client, err := createMqttClient_subscribe(mqttClientId, uri)
@@ -101,7 +97,7 @@ func thingsBoardrunCommandHandler(i int) {
 		fmt.Println(err)
 	}
 
-	token := client.Subscribe(topic, byte(qos), thingsBoardonCommandReceivedFromBroker)
+	token := client.Subscribe(topic, byte(qos), thingsBoardOnCommandReceivedFromBroker)
 	if token.Wait() && token.Error() != nil {
 		fmt.Println(token.Error())
 	}
@@ -109,7 +105,7 @@ func thingsBoardrunCommandHandler(i int) {
 	select {}
 }
 
-func thingsBoardonCommandReceivedFromBroker(client mqtt.Client, message mqtt.Message) {
+func thingsBoardOnCommandReceivedFromBroker(client mqtt.Client, message mqtt.Message) {
 	{
 		//fmt.Println(message.Payload())
 		fmt.Println(fmt.Sprintf("Send response: %s %s", message.Topic(), message.Payload()))
