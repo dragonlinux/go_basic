@@ -37,6 +37,7 @@ func parseJsonArray(jsonStr []uint8) {
 		panic(err)
 	}
 	fmt.Println(val)
+	fmt.Println(reflect.TypeOf(val))
 }
 
 func OperatingPlatform1() {
@@ -44,16 +45,15 @@ func OperatingPlatform1() {
 	//path := "./device.json"
 	path := "./device_multi_array.json"
 
-	yamlFile, err := ioutil.ReadFile(path)
+	uint8Result, err := ioutil.ReadFile(path)
 	if err != nil {
 		log.Fatalf("cannot unmarshal data: %v", err)
 	}
 
-	//log.Println("yamlFile:", yamlFile)
-	//getCommands1(yamlFile)
+	//log.Println("uint8Result:", uint8Result)
+	//getCommands1(uint8Result)
 
-	parseJsonArray(yamlFile)
-
+	parseJsonArray(uint8Result)
 }
 
 func main() {
