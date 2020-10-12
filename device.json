@@ -1,0 +1,193 @@
+[
+  {
+    "lastReported": 0,
+    "id": "897b5ea0-10fe-485e-b70f-cb1a8e67c29a",
+    "lastConnected": 0,
+    "name": "Modbus_TCP_test_device",
+    "adminState": "UNLOCKED",
+    "commands": [
+      {
+        "name": "SwitchA",
+        "created": 1602485092020,
+        "put": {
+          "url": "http://edgex-core-command:48082/api/v1/device/897b5ea0-10fe-485e-b70f-cb1a8e67c29a/command/2597c7ec-d33b-4353-8b9a-d4ebf28f6b1a",
+          "parameterNames": [
+            "SwitchA"
+          ],
+          "path": "/api/v1/device/{deviceId}/SwitchA"
+        },
+        "modified": 1602485092020,
+        "id": "2597c7ec-d33b-4353-8b9a-d4ebf28f6b1a",
+        "get": {
+          "url": "http://edgex-core-command:48082/api/v1/device/897b5ea0-10fe-485e-b70f-cb1a8e67c29a/command/2597c7ec-d33b-4353-8b9a-d4ebf28f6b1a",
+          "responses": [
+            {
+              "code": "503",
+              "description": "service unavailable"
+            }
+          ],
+          "path": "/api/v1/device/{deviceId}/SwitchA"
+        }
+      },
+      {
+        "id": "2d115363-9445-4b8d-84a3-c53e27dc343e",
+        "get": {
+          "responses": [
+            {
+              "code": "503",
+              "description": "service unavailable"
+            }
+          ],
+          "url": "http://edgex-core-command:48082/api/v1/device/897b5ea0-10fe-485e-b70f-cb1a8e67c29a/command/2d115363-9445-4b8d-84a3-c53e27dc343e",
+          "path": "/api/v1/device/{deviceId}/SwitchB"
+        },
+        "created": 1602485092048,
+        "put": {
+          "url": "http://edgex-core-command:48082/api/v1/device/897b5ea0-10fe-485e-b70f-cb1a8e67c29a/command/2d115363-9445-4b8d-84a3-c53e27dc343e",
+          "path": "/api/v1/device/{deviceId}/SwitchB",
+          "parameterNames": [
+            "SwitchB"
+          ]
+        },
+        "modified": 1602485092048,
+        "name": "SwitchB"
+      },
+      {
+        "name": "CPU1",
+        "created": 1602485092050,
+        "put": {
+          "url": "http://edgex-core-command:48082/api/v1/device/897b5ea0-10fe-485e-b70f-cb1a8e67c29a/command/48078cf2-797f-4d72-8630-44ce787ef866"
+        },
+        "modified": 1602485092050,
+        "id": "48078cf2-797f-4d72-8630-44ce787ef866",
+        "get": {
+          "path": "/api/v1/device/{deviceId}/CPU1",
+          "responses": [
+            {
+              "expectedValues": [
+                "cpu1"
+              ],
+              "code": "200",
+              "description": "Get the HVAC values from the device"
+            },
+            {
+              "description": "service unavailable",
+              "code": "503"
+            }
+          ],
+          "url": "http://edgex-core-command:48082/api/v1/device/897b5ea0-10fe-485e-b70f-cb1a8e67c29a/command/48078cf2-797f-4d72-8630-44ce787ef866"
+        }
+      },
+      {
+        "get": {
+          "path": "/api/v1/device/{deviceId}/MEM1",
+          "url": "http://edgex-core-command:48082/api/v1/device/897b5ea0-10fe-485e-b70f-cb1a8e67c29a/command/713441ff-f4fb-49e3-9e75-c17310e3ceda",
+          "responses": [
+            {
+              "code": "200",
+              "expectedValues": [
+                "mem1"
+              ],
+              "description": "Get the HVAC values from the device"
+            },
+            {
+              "code": "503",
+              "description": "service unavailable"
+            }
+          ]
+        },
+        "id": "713441ff-f4fb-49e3-9e75-c17310e3ceda",
+        "name": "MEM1",
+        "put": {
+          "url": "http://edgex-core-command:48082/api/v1/device/897b5ea0-10fe-485e-b70f-cb1a8e67c29a/command/713441ff-f4fb-49e3-9e75-c17310e3ceda"
+        },
+        "modified": 1602485092050,
+        "created": 1602485092050
+      },
+      {
+        "id": "e1e8cc4b-f553-4f56-abfb-6dae84d91ccb",
+        "get": {
+          "responses": [
+            {
+              "code": "200",
+              "expectedValues": [
+                "disk1"
+              ],
+              "description": "Get the HVAC values from the device"
+            },
+            {
+              "description": "service unavailable",
+              "code": "503"
+            }
+          ],
+          "url": "http://edgex-core-command:48082/api/v1/device/897b5ea0-10fe-485e-b70f-cb1a8e67c29a/command/e1e8cc4b-f553-4f56-abfb-6dae84d91ccb",
+          "path": "/api/v1/device/{deviceId}/DISK1"
+        },
+        "created": 1602485092050,
+        "put": {
+          "url": "http://edgex-core-command:48082/api/v1/device/897b5ea0-10fe-485e-b70f-cb1a8e67c29a/command/e1e8cc4b-f553-4f56-abfb-6dae84d91ccb"
+        },
+        "modified": 1602485092050,
+        "name": "DISK1"
+      },
+      {
+        "created": 1602485092050,
+        "modified": 1602485092050,
+        "put": {
+          "url": "http://edgex-core-command:48082/api/v1/device/897b5ea0-10fe-485e-b70f-cb1a8e67c29a/command/76bd223a-4231-4213-9313-31cc72e89e80"
+        },
+        "name": "NETWORK1",
+        "id": "76bd223a-4231-4213-9313-31cc72e89e80",
+        "get": {
+          "responses": [
+            {
+              "code": "200",
+              "expectedValues": [
+                "network1"
+              ],
+              "description": "Get the HVAC values from the device"
+            },
+            {
+              "code": "503",
+              "description": "service unavailable"
+            }
+          ],
+          "url": "http://edgex-core-command:48082/api/v1/device/897b5ea0-10fe-485e-b70f-cb1a8e67c29a/command/76bd223a-4231-4213-9313-31cc72e89e80",
+          "path": "/api/v1/device/{deviceId}/NETWORK1"
+        }
+      },
+      {
+        "name": "COMPUTER2",
+        "put": {
+          "url": "http://edgex-core-command:48082/api/v1/device/897b5ea0-10fe-485e-b70f-cb1a8e67c29a/command/61343785-2190-414c-8c1c-dd8b33209a9d",
+          "path": "/api/v1/device/{deviceId}/COMPUTER2",
+          "parameterNames": [
+            "cpu2",
+            "mem2",
+            "disk2",
+            "network2"
+          ]
+        },
+        "modified": 1602485092050,
+        "created": 1602485092050,
+        "get": {
+          "path": "/api/v1/device/{deviceId}/COMPUTER2",
+          "url": "http://edgex-core-command:48082/api/v1/device/897b5ea0-10fe-485e-b70f-cb1a8e67c29a/command/61343785-2190-414c-8c1c-dd8b33209a9d",
+          "responses": [
+            {
+              "code": "503",
+              "description": "service unavailable"
+            }
+          ]
+        },
+        "id": "61343785-2190-414c-8c1c-dd8b33209a9d"
+      }
+    ],
+    "labels": [
+      "Air conditioner",
+      "modbus TCP"
+    ],
+    "operatingState": "ENABLED",
+    "location": null
+  }
+]
