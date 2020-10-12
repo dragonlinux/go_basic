@@ -74,7 +74,7 @@ func onCommandReceivedFromBroker(client mqtt.Client, message mqtt.Message) {
 	//}
 }
 
-func thingsBoardrunCommandHandler(i int) {
+func thingsBoardRunCommandHandler(i int) {
 
 	var brokerUrl = "192.168.1.189"
 	var brokerPort = 1883
@@ -132,5 +132,5 @@ func main() {
 	//mosquitto_sub -h 192.168.1.190 -t "DataTopic" -v
 	//operator()
 	//runCommandHandler(1)
-	thingsBoardrunCommandHandler(1)
+	thingsBoardRunCommandHandler(1)
 }
