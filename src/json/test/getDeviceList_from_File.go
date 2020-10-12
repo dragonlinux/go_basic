@@ -46,20 +46,127 @@ func parseJsonArray(jsonStr []uint8) {
 			fmt.Println(content["name"])
 			fmt.Println(content["commands"])
 			fmt.Println(reflect.TypeOf(content["commands"]))
-
+			fmt.Println("==============>")
 			v := content["commands"]
 			s := reflect.ValueOf(v)
 
 			//fmt.Println(reflect.TypeOf(s))
 			for i := 0; i < s.Len(); i++ {
-				fmt.Println(i, s.Index(i), reflect.TypeOf(s.Index(i)).Kind())
+				//fmt.Println(i, s.Index(i), reflect.TypeOf(s.Index(i)).Kind())
+				fmt.Println(i, s.Index(i), reflect.TypeOf(s.Index(i)), reflect.TypeOf(s.Index(i)).Kind())
 				//fmt.Println(reflect.TypeOf(s.Index(i)))
+				//fmt.Println(reflect.ValueOf(s.Index(i)))
+				//fmt.Println(reflect.Indirect(s.Index(i)).FieldByName("name"))
+				//v = s.Index(i)
+				//fmt.Println(v)
 
+				//fmt.Println(s.Index(i).Elem())
+				//fmt.Println(s.Index(i).Elem().Len())
+				//for i, x := range s.Index(i) {
+				//	fmt.Println(i, x)
+				//}
+				//v = reflect.TypeOf(s.Index(i)).Kind().
+				//for _, key := range v.Mapkeys() {
+				//	strct := v.MapIndex(key)
+				//	fmt.Println(key.Interface(), strct.Interface())
+				//}
+
+				switch reflect.TypeOf(s.Index(i)).Kind() {
+
+				case reflect.Struct:
+					name := reflect.ValueOf(s.Index(i))
+					fmt.Println("+++++++", name.Interface())
+					//fmt.Println("+++++++", name.Interface())
+
+					v := name.Interface()
+					fmt.Println("xxxxxxxx", v)
+					fmt.Println("xxxxxxxx", reflect.TypeOf(v))
+
+					//for s, a := range v {
+					//	// a has type *Author
+					//	fmt.Printf("%s: author=%c\n", s, a)
+					//}
+					//for i, key := range name.Interface() {
+					//	fmt.Println(i, key)
+					//}
+
+				default:
+					//error here, unexpected
+				}
 			}
-			//for i2, contentCommand := range v {
-			//	fmt.Println(i2, contentCommand)
-			//}
+
 		}
+	}
+}
+
+func parseJsonArray1(jsonStr []uint8) {
+	var val []map[string]interface{} // <---- This must be an array to match input
+	if err := json.Unmarshal([]byte(jsonStr), &val); err != nil {
+		panic(err)
+	}
+
+	for i, content := range val {
+		if i == 0 {
+			fmt.Println(i, content)
+			fmt.Println(reflect.TypeOf(content))
+			fmt.Println(content["id"])
+			fmt.Println(content["name"])
+			//fmt.Println(content["commands"])
+			fmt.Println(reflect.TypeOf(content["commands"]))
+			fmt.Println("==============>")
+
+			johnJSON, err := json.Marshal(content)
+			if err != nil {
+				fmt.Println("error:", err)
+			}
+			fmt.Println("+++++++++>>>", string(johnJSON), err)
+			{
+				result := gjson.Get(string(johnJSON), "commands")
+
+				fmt.Println(reflect.TypeOf(result))
+				fmt.Println(result.IsArray())
+
+				count := 0
+
+				if result.IsArray() {
+					for i, name := range result.Array() {
+						println(i, name.String())
+						{
+							result1 :=gjson.Get(string(name.String()), "name")
+							fmt.Println("..........>",result1)
+
+						}
+						count++
+					}
+				}
+			}
+		}
+	}
+}
+
+func DoFiledAndMethod(input interface{}) {
+
+	getType := reflect.TypeOf(input)
+	fmt.Println("get Type is :", getType.Name())
+
+	getValue := reflect.ValueOf(input)
+	fmt.Println("get all Fields is:", getValue)
+
+	// 获取方法字段
+	// 1. 先获取interface的reflect.Type，然后通过NumField进行遍历
+	// 2. 再通过reflect.Type的Field获取其Field
+	// 3. 最后通过Field的Interface()得到对应的value
+	for i := 0; i < getType.NumField(); i++ {
+		field := getType.Field(i)
+		value := getValue.Field(i).Interface()
+		fmt.Printf("%s: %v = %v\n", field.Name, field.Type, value)
+	}
+
+	// 获取方法
+	// 1. 先获取interface的reflect.Type，然后通过.NumMethod进行遍历
+	for i := 0; i < getType.NumMethod(); i++ {
+		m := getType.Method(i)
+		fmt.Printf("%s: %v\n", m.Name, m.Type)
 	}
 }
 
@@ -76,7 +183,7 @@ func OperatingPlatform1() {
 	//log.Println("uint8Result:", uint8Result)
 	//getCommands1(uint8Result)
 
-	parseJsonArray(uint8Result)
+	parseJsonArray1(uint8Result)
 }
 
 func main() {
