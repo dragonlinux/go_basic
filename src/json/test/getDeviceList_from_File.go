@@ -36,8 +36,20 @@ func parseJsonArray(jsonStr []uint8) {
 	if err := json.Unmarshal([]byte(jsonStr), &val); err != nil {
 		panic(err)
 	}
-	fmt.Println(val)
-	fmt.Println(reflect.TypeOf(val))
+	//fmt.Println(val)
+	//fmt.Println(reflect.TypeOf(val))
+	for i, content := range val {
+		if i == 0 {
+			fmt.Println(i, content)
+			fmt.Println(reflect.TypeOf(content))
+			fmt.Println(content["id"])
+			fmt.Println(content["name"])
+			fmt.Println(content["commands"])
+			//for i2, contentCommand := range content["commands"] {
+			//	fmt.Println(i2, contentCommand)
+			//}
+		}
+	}
 }
 
 func OperatingPlatform1() {
