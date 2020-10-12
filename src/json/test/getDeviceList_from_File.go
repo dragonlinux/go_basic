@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/tidwall/gjson"
 	"io/ioutil"
@@ -30,16 +31,29 @@ func getCommands1(body []uint8) {
 	fmt.Println("array count is :", count)
 }
 
+func parseJsonArray(jsonStr []uint8) {
+	var val []map[string]interface{} // <---- This must be an array to match input
+	if err := json.Unmarshal([]byte(jsonStr), &val); err != nil {
+		panic(err)
+	}
+	fmt.Println(val)
+}
+
 func OperatingPlatform1() {
 
-	yamlFile, err := ioutil.ReadFile("./device.json")
+	//path := "./device.json"
+	path := "./device_multi_array.json"
+
+	yamlFile, err := ioutil.ReadFile(path)
 	if err != nil {
 		log.Fatalf("cannot unmarshal data: %v", err)
 	}
 
 	//log.Println("yamlFile:", yamlFile)
+	//getCommands1(yamlFile)
 
-	getCommands1(yamlFile)
+	parseJsonArray(yamlFile)
+
 }
 
 func main() {
