@@ -45,7 +45,18 @@ func parseJsonArray(jsonStr []uint8) {
 			fmt.Println(content["id"])
 			fmt.Println(content["name"])
 			fmt.Println(content["commands"])
-			//for i2, contentCommand := range content["commands"] {
+			fmt.Println(reflect.TypeOf(content["commands"]))
+
+			v := content["commands"]
+			s := reflect.ValueOf(v)
+
+			//fmt.Println(reflect.TypeOf(s))
+			for i := 0; i < s.Len(); i++ {
+				fmt.Println(i, s.Index(i), reflect.TypeOf(s.Index(i)).Kind())
+				//fmt.Println(reflect.TypeOf(s.Index(i)))
+
+			}
+			//for i2, contentCommand := range v {
 			//	fmt.Println(i2, contentCommand)
 			//}
 		}
