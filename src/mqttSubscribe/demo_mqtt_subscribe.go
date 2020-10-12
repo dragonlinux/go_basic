@@ -107,8 +107,15 @@ func thingsBoardrunCommandHandler(i int) {
 
 func thingsBoardOnCommandReceivedFromBroker(client mqtt.Client, message mqtt.Message) {
 	{
-		//fmt.Println(message.Payload())
-		fmt.Println(fmt.Sprintf("Send response: %s %s", message.Topic(), message.Payload()))
+		{
+			optionsReader := client.OptionsReader()
+			fmt.Println(optionsReader.Username())
+			fmt.Println(optionsReader.ClientID())
+		}
+		{
+			//fmt.Println(message.Payload())
+			fmt.Println(fmt.Sprintf("Send response: %s %s", message.Topic(), message.Payload()))
+		}
 	}
 }
 
@@ -123,7 +130,7 @@ func operator() {
 func main() {
 	//mosquitto_pub -h 192.168.1.190 -t "DataTopic" -m "Hello MQTT1"
 	//mosquitto_sub -h 192.168.1.190 -t "DataTopic" -v
-	operator()
+	//operator()
 	//runCommandHandler(1)
-	//thingsBoardrunCommandHandler(1)
+	thingsBoardrunCommandHandler(1)
 }
