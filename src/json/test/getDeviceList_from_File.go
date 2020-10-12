@@ -134,7 +134,8 @@ func parseJsonArray1(jsonStr []uint8) {
 						{
 							result1 :=gjson.Get(string(name.String()), "name")
 							fmt.Println("..........>",result1)
-
+							result1 =gjson.Get(string(name.String()), "put")
+							fmt.Println("..........>",result1)
 						}
 						count++
 					}
