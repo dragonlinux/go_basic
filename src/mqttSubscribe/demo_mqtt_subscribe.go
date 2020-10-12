@@ -78,7 +78,7 @@ func thingsBoardrunCommandHandler(i int) {
 
 	var brokerUrl = "192.168.1.189"
 	var brokerPort = 1883
-	var username = "XJyR2Cn0ttnVKhe5GL4w"
+	var username = "hL5YM0ACrTjCqsbeCFCS"
 	var password = ""
 	//var mqttClientId = "sub"
 	var qos = 1
