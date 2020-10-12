@@ -10,7 +10,7 @@ import (
 
 func runCommandHandler(i int) {
 
-	var brokerUrl = "192.168.1.80"
+	var brokerUrl = "debug_mqtt_broker.com"
 	var brokerPort = 1883
 	var username = "admin"
 	var password = "public"
@@ -41,8 +41,13 @@ func runCommandHandler(i int) {
 
 func onCommandReceivedFromBroker(client mqtt.Client, message mqtt.Message) {
 	{
+		optionsReader := client.OptionsReader()
+		fmt.Println(optionsReader.Username())
+		fmt.Println(optionsReader.ClientID())
+	}
+	{
 		//fmt.Println(message.Payload())
-		fmt.Println(fmt.Sprintf("Send response: %s", message.Payload()))
+		fmt.Println(fmt.Sprintf("Send response: %s %s", message.Topic(), message.Payload()))
 	}
 	http2.SendHttpReq()
 	//var request map[string]interface{}
@@ -53,9 +58,6 @@ func operator() {
 	for i := 0; i < 10; i++ {
 		fmt.Println("--->", i)
 		go runCommandHandler(i)
-		//time.Sleep(1000 * time.Millisecond)
-
-		//select {}
 	}
 
 	select {}

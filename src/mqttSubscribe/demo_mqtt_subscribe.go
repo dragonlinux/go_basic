@@ -9,7 +9,7 @@ import (
 
 func runCommandHandler(i int) {
 
-	var brokerUrl = "192.168.1.190"
+	var brokerUrl = "debug_mqtt_broker.com"
 	var brokerPort = 1883
 	var username = "admin"
 	var password = "public"
@@ -40,8 +40,13 @@ func runCommandHandler(i int) {
 
 func onCommandReceivedFromBroker(client mqtt.Client, message mqtt.Message) {
 	{
+		optionsReader := client.OptionsReader()
+		fmt.Println(optionsReader.Username())
+		fmt.Println(optionsReader.ClientID())
+	}
+	{
 		//fmt.Println(message.Payload())
-		fmt.Println(fmt.Sprintf("Send response: %s", message.Payload()))
+		fmt.Println(fmt.Sprintf("Send response: %s %s", message.Topic(), message.Payload()))
 	}
 	//var request map[string]interface{}
 
@@ -76,7 +81,9 @@ func onCommandReceivedFromBroker(client mqtt.Client, message mqtt.Message) {
 
 func thingsBoardRunCommandHandler(i int) {
 
-	var brokerUrl = "192.168.1.189"
+	//modify file of host all by yourself
+	var brokerUrl = "demo_thingsboard.com"
+
 	var brokerPort = 1883
 	var username = "hL5YM0ACrTjCqsbeCFCS"
 	var password = ""

@@ -9,7 +9,7 @@ import (
 
 func mqttPublish(content string) {
 
-	var brokerUrl = "192.168.1.80"
+	var brokerUrl = "debug_mqtt_broker.com"
 	var brokerPort = 1883
 	var username = "admin"
 	var password = "public"
