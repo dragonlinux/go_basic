@@ -107,7 +107,6 @@ func getDeviceName(jsonStr []uint8, deviceName string) (retString string, flag b
 }
 
 func filterOperator(jsonStr string, filterString string) (url string, flag bool) {
-
 	//fmt.Println("filterOperator ", jsonStr)
 	{
 		result := gjson.Get(string(jsonStr), "commands")
@@ -122,28 +121,32 @@ func filterOperator(jsonStr string, filterString string) (url string, flag bool)
 				//println(i, name.String())
 				{
 					result1 := gjson.Get(string(name.String()), "name")
-					fmt.Println("name ..........>", result1)
+					//fmt.Println("name ..........>", result1)
 
-					result1 = gjson.Get(string(name.String()), "put")
-					//fmt.Println("put  ..........>", result1)
+					if result1.String() == filterString {
+						result1 = gjson.Get(string(name.String()), "put")
+						//fmt.Println("put  ..........>", result1)
 
-					//fmt.Println(reflect.TypeOf(result1))
+						//fmt.Println(reflect.TypeOf(result1))
 
-					result2 := result1
-					result1 = gjson.Get(result1.String(), "url")
-					fmt.Println("url  ..........>", result1)
-					//url := result1.String()
-					_ = result1.String()
+						result2 := result1
+						result1 = gjson.Get(result1.String(), "url")
+						fmt.Println("url  ..........>", result1)
+						url := result1.String()
+						_ = result1.String()
 
-					result1 = gjson.Get(result2.String(), "parameterNames")
+						result1 = gjson.Get(result2.String(), "parameterNames")
 
-					fmt.Println("parameterNames length.>", len(result1.Array()))
-					if len(result1.Array()) == 1 {
-						fmt.Println("parameterNames.>", result1)
-						//return url
+						fmt.Println("parameterNames length.>", len(result1.Array()))
+						if len(result1.Array()) == 1 {
+							fmt.Println("parameterNames.>", result1)
+							return url, true
+						}
+
+						return "", false
+
+						fmt.Println("")
 					}
-
-					fmt.Println("")
 				}
 				count++
 			}
@@ -181,8 +184,7 @@ func OperatingPlatform() {
 			return
 		}
 
-		fmt.Println(url)
-
+		fmt.Println("rul:", url)
 	}
 
 }
