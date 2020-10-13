@@ -157,7 +157,7 @@ func thingsBoardOnCommandReceivedFromBroker(client mqtt.Client, message mqtt.Mes
 	}
 	{
 		operator, _ := getKeyFromValue(optionsReader.Username())
-		fmt.Println(operator) // this is the operator that I want to tell edgex
+		fmt.Println("operator:", operator) // this is the operator that I want to tell edgex
 
 		uint8Result := getHttpRes("http://localhost:48082/api/v1/device")
 
@@ -181,10 +181,34 @@ func thingsBoardOnCommandReceivedFromBroker(client mqtt.Client, message mqtt.Mes
 				}
 				return
 			}
-			fmt.Println("go routine get :rul:", url, "\t", param)
+			fmt.Println("go routine get :rul:", url, "\tparam:", param)
+			//createKeyValueJson(param,)
 		}
 
 	}
+}
+
+func createKeyValueJson(keyStr string, in interface{}) string {
+	data := make(map[string]interface{})
+
+	//key := "SwitchB"
+	//value := false
+
+	//data[key] = value
+	data[keyStr] = in
+	//fmt.Println(data)
+
+	mapString := make(map[string]string)
+	for key, value := range data {
+		strKey := fmt.Sprintf("%v", key)
+		strValue := fmt.Sprintf("%v", value)
+		mapString[strKey] = strValue
+	}
+	//fmt.Printf("\n%#v\n", mapString)
+
+	jsonString, _ := json.Marshal(mapString)
+	//fmt.Println(string(jsonString))
+	return string(jsonString)
 }
 
 func getKeyFromValue(gvalue string) (string, bool) {
@@ -192,7 +216,7 @@ func getKeyFromValue(gvalue string) (string, bool) {
 	if err != nil {
 		log.Fatalf("cannot unmarshal data: %v", err)
 	}
-	log.Println("yamlFile:", yamlFile)
+	//log.Println("yamlFile:", yamlFile)
 
 	m := map[string]interface{}{}
 	// Parsing/Unmarshalling JSON encoding/json
@@ -202,7 +226,7 @@ func getKeyFromValue(gvalue string) (string, bool) {
 	}
 
 	for key, value := range m {
-		fmt.Println("\tread from file:", key, ":", value)
+		//fmt.Println("\tread from file:", key, ":", value)
 		//fmt.Println("++++", reflect.TypeOf(value))
 
 		if gvalue == value {
@@ -216,8 +240,8 @@ func getKeyFromValue(gvalue string) (string, bool) {
 
 func parseMap(aMap map[string]interface{}) {
 	for key, value := range aMap {
-		fmt.Println("\tread from file:", key, ":", value)
-		fmt.Println("++++", reflect.TypeOf(value))
+		fmt.Println("\tread from file,key:", key, " value:", value)
+		fmt.Println("++++", reflect.ValueOf(value))
 		go thingsBoardRunCommandHandler(reflect.ValueOf(value).String())
 
 		//go OperatingPlatform("Modbus_TCP_test_device", key, reflect.ValueOf(value).String())
