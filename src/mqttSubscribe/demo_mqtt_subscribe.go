@@ -79,16 +79,17 @@ func onCommandReceivedFromBroker(client mqtt.Client, message mqtt.Message) {
 	//}
 }
 
-func thingsBoardRunCommandHandler(i int) {
+func thingsBoardRunCommandHandler(usernameAsToken string) {
 
 	//modify file of host all by yourself
 	var brokerUrl = "demo_thingsboard.com"
 
 	var brokerPort = 1883
-	var username = "bJ7tOTJbj3YqLlR98Myo"
+	var username = usernameAsToken
 	var password = ""
 	//var mqttClientId = "sub"
-	var mqttClientId = fmt.Sprintf("%v", i)
+	//var mqttClientId = fmt.Sprintf("%v", i)
+	var mqttClientId = ""
 	var qos = 1
 	var topic = "v1/devices/me/rpc/request/+"
 
@@ -138,5 +139,5 @@ func main() {
 	//mosquitto_sub -h 192.168.1.190 -t "DataTopic" -v
 	//operator()
 	//runCommandHandler(1)
-	thingsBoardRunCommandHandler(1)
+	thingsBoardRunCommandHandler("6vkBgngn2ah7EcHM7mqP")
 }
