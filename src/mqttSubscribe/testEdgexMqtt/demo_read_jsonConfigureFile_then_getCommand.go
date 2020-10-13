@@ -12,7 +12,10 @@ import (
 )
 
 func thingsBoardRunCommandHandler(usernameAsToken string) {
+	{
+		// send http request, if not a operator,go to endless loop.
 
+	}
 	//modify file of host all by yourself
 	var brokerUrl = "demo_thingsboard.com"
 
@@ -46,11 +49,9 @@ func thingsBoardRunCommandHandler(usernameAsToken string) {
 }
 
 func thingsBoardOnCommandReceivedFromBroker(client mqtt.Client, message mqtt.Message) {
+	optionsReader := client.OptionsReader()
 	{
-		optionsReader := client.OptionsReader()
 		fmt.Println("Username:", optionsReader.Username(), "\tClientID:", optionsReader.ClientID())
-	}
-	{
 		fmt.Println(fmt.Sprintf("Send response: %s %s", message.Topic(), message.Payload()))
 	}
 	{
@@ -58,6 +59,37 @@ func thingsBoardOnCommandReceivedFromBroker(client mqtt.Client, message mqtt.Mes
 		var qos = byte(1)
 		client.Publish(topic, qos, false, message)
 	}
+	{
+		ret, _ := getKeyFromValue(optionsReader.Username())
+		fmt.Println(ret)
+	}
+}
+
+func getKeyFromValue(gvalue string) (string, bool) {
+	yamlFile, err := ioutil.ReadFile("./src/thingsboard_provide.json")
+	if err != nil {
+		log.Fatalf("cannot unmarshal data: %v", err)
+	}
+	log.Println("yamlFile:", yamlFile)
+
+	m := map[string]interface{}{}
+	// Parsing/Unmarshalling JSON encoding/json
+	err = json.Unmarshal([]byte(yamlFile), &m)
+	if err != nil {
+		panic(err)
+	}
+
+	for key, value := range m {
+		fmt.Println("\tread from file:", key, ":", value)
+		//fmt.Println("++++", reflect.TypeOf(value))
+
+		if gvalue == value {
+			return key, true
+		}
+		//go OperatingPlatform("Modbus_TCP_test_device", key, reflect.ValueOf(value).String())
+	}
+
+	return "", false
 }
 
 func parseMap(aMap map[string]interface{}) {

@@ -133,9 +133,40 @@ func parseMap(aMap map[string]interface{}) {
 	select {}
 }
 
+func getKeyFromValue(gvalue string) (string, bool) {
+	yamlFile, err := ioutil.ReadFile("./src/thingsboard_provide.json")
+	if err != nil {
+		log.Fatalf("cannot unmarshal data: %v", err)
+	}
+	log.Println("yamlFile:", yamlFile)
+
+	m := map[string]interface{}{}
+	// Parsing/Unmarshalling JSON encoding/json
+	err = json.Unmarshal([]byte(yamlFile), &m)
+	if err != nil {
+		panic(err)
+	}
+
+	for key, value := range m {
+		fmt.Println("\tread from file:", key, ":", value)
+		//fmt.Println("++++", reflect.TypeOf(value))
+
+		if gvalue == value {
+			return key, true
+		}
+		//go OperatingPlatform("Modbus_TCP_test_device", key, reflect.ValueOf(value).String())
+	}
+
+	return "", false
+}
+
 func main() {
 	fmt.Println("dragonlinux")
-
+	{
+		ret, _ := getKeyFromValue("VgJMb6T0pITk7A16zV3r")
+		fmt.Println(ret)
+		return
+	}
 	yamlFile, err := ioutil.ReadFile("./src/thingsboard_provide.json")
 	if err != nil {
 		log.Fatalf("cannot unmarshal data: %v", err)
