@@ -78,7 +78,7 @@ func parseJsonArray1(jsonStr []uint8) (url string) {
 	return ""
 }
 
-func getDeviceName(jsonStr []uint8, deviceName string) (flag bool, retString string) {
+func getDeviceName(jsonStr []uint8, deviceName string) (retString string, flag bool) {
 	var val []map[string]interface{} // <---- This must be an array to match input
 	if err := json.Unmarshal([]byte(jsonStr), &val); err != nil {
 		panic(err)
@@ -100,10 +100,56 @@ func getDeviceName(jsonStr []uint8, deviceName string) (flag bool, retString str
 			}
 			//fmt.Println("再转换成json string+++++++++>>>", string(johnJSON), err)
 
-			return true, string(johnJSON)
+			return string(johnJSON), true
 		}
 	}
-	return false, ""
+	return "", false
+}
+
+func filterOperator(jsonStr string, filterString string) (url string, flag bool) {
+
+	//fmt.Println("filterOperator ", jsonStr)
+	{
+		result := gjson.Get(string(jsonStr), "commands")
+
+		fmt.Println(reflect.TypeOf(result))
+		fmt.Println(result.IsArray())
+
+		count := 0
+
+		if result.IsArray() {
+			for _, name := range result.Array() {
+				//println(i, name.String())
+				{
+					result1 := gjson.Get(string(name.String()), "name")
+					fmt.Println("name ..........>", result1)
+
+					result1 = gjson.Get(string(name.String()), "put")
+					//fmt.Println("put  ..........>", result1)
+
+					//fmt.Println(reflect.TypeOf(result1))
+
+					result2 := result1
+					result1 = gjson.Get(result1.String(), "url")
+					fmt.Println("url  ..........>", result1)
+					//url := result1.String()
+					_ = result1.String()
+
+					result1 = gjson.Get(result2.String(), "parameterNames")
+
+					fmt.Println("parameterNames length.>", len(result1.Array()))
+					if len(result1.Array()) == 1 {
+						fmt.Println("parameterNames.>", result1)
+						//return url
+					}
+
+					fmt.Println("")
+				}
+				count++
+			}
+		}
+	}
+	return "", false
 }
 
 func OperatingPlatform() {
@@ -123,12 +169,19 @@ func OperatingPlatform() {
 		fmt.Println("final get", url)
 	}
 	{
-		flag, retJson := getDeviceName(uint8Result, "Modbus_TCP_test_device")
+		retJson, flag := getDeviceName(uint8Result, "Modbus_TCP_test_device")
 		if flag != true {
-			fmt.Println("parse failed")
+			fmt.Println("DeviceName not exist")
+			return
+		}
+		//fmt.Println(retJson)
+		url, flag := filterOperator(retJson, "SwitchB")
+		if flag != true {
+			fmt.Println("DeviceName not exist")
+			return
 		}
 
-		fmt.Println(retJson)
+		fmt.Println(url)
 
 	}
 
