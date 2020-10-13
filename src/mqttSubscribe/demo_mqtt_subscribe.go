@@ -85,9 +85,10 @@ func thingsBoardRunCommandHandler(i int) {
 	var brokerUrl = "demo_thingsboard.com"
 
 	var brokerPort = 1883
-	var username = "hL5YM0ACrTjCqsbeCFCS"
+	var username = "bJ7tOTJbj3YqLlR98Myo"
 	var password = ""
 	//var mqttClientId = "sub"
+	var mqttClientId = fmt.Sprintf("%v", i)
 	var qos = 1
 	var topic = "v1/devices/me/rpc/request/+"
 
@@ -97,8 +98,7 @@ func thingsBoardRunCommandHandler(i int) {
 		User:   url.UserPassword(username, password),
 	}
 
-	//client, err := createMqttClient_subscribe(mqttClientId, uri)
-	client, err := mymqtt.CreateMqttClientSubscribe(fmt.Sprintf("%v", i), uri) //id必须要不一样才能正常接收
+	client, err := mymqtt.CreateMqttClientSubscribe(mqttClientId, uri) //id必须要不一样才能正常接收
 	defer client.Disconnect(5000)
 	if err != nil {
 		fmt.Println(err)
@@ -116,8 +116,7 @@ func thingsBoardOnCommandReceivedFromBroker(client mqtt.Client, message mqtt.Mes
 	{
 		{
 			optionsReader := client.OptionsReader()
-			fmt.Println(optionsReader.Username())
-			fmt.Println(optionsReader.ClientID())
+			fmt.Println("Username:", optionsReader.Username(), "\tClientID:", optionsReader.ClientID())
 		}
 		{
 			//fmt.Println(message.Payload())
