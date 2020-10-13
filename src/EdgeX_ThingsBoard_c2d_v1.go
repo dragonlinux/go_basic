@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"reflect"
+	"time"
 )
 
 func parseJsonArray1(jsonStr []uint8) (url string) {
@@ -87,12 +88,12 @@ func getDeviceName(jsonStr []uint8, deviceName string) (retString string, flag b
 	for _, content := range val {
 		if content["name"] == deviceName {
 			//fmt.Println(i, content)
-			fmt.Println(reflect.TypeOf(content))
+			//fmt.Println(reflect.TypeOf(content))
 			fmt.Println(content["id"])
-			fmt.Println(content["name"])
+			//fmt.Println(content["name"])
 			//fmt.Println(content["commands"])
-			fmt.Println(reflect.TypeOf(content["commands"]))
-			fmt.Println("==============>")
+			//fmt.Println(reflect.TypeOf(content["commands"]))
+			//fmt.Println("==============>")
 
 			johnJSON, err := json.Marshal(content)
 			if err != nil {
@@ -111,8 +112,8 @@ func filterOperator(jsonStr string, filterString string) (url string, param stri
 	{
 		result := gjson.Get(string(jsonStr), "commands")
 
-		fmt.Println(reflect.TypeOf(result))
-		fmt.Println(result.IsArray())
+		//fmt.Println(reflect.TypeOf(result))
+		//fmt.Println(result.IsArray())
 
 		if result.IsArray() {
 			for _, name := range result.Array() {
@@ -129,17 +130,16 @@ func filterOperator(jsonStr string, filterString string) (url string, param stri
 
 						result2 := result1
 						result1 = gjson.Get(result1.String(), "url")
-						fmt.Println("url  ..........>", result1)
+						//fmt.Println("url  ..........>", result1)
 						url := result1.String()
-						_ = result1.String()
 
 						result1 = gjson.Get(result2.String(), "parameterNames")
 
-						fmt.Println("parameterNames length.>", len(result1.Array()))
+						//fmt.Println("parameterNames length.>", len(result1.Array()))
 						if len(result1.Array()) == 1 {
-							fmt.Println("parameterNames.>", result1)
-							for i, r := range result1.Array() {
-								fmt.Println(i, r, reflect.TypeOf(r.String()))
+							//fmt.Println("parameterNames.>", result1)
+							for _, r := range result1.Array() {
+								//fmt.Println(i, r, reflect.TypeOf(r.String()))
 								return url, r.String(), true
 							}
 							//param := result1.Array()[0]
@@ -153,8 +153,9 @@ func filterOperator(jsonStr string, filterString string) (url string, param stri
 	return "", "", false
 }
 
-func OperatingPlatform() {
+func OperatingPlatform(deviceName string, operator string, token string) {
 
+	//fmt.Println("=-=-=-=-:", token)
 	//path := "./device.json"
 	path := "./device_multi_array.json"
 
@@ -162,35 +163,48 @@ func OperatingPlatform() {
 	if err != nil {
 		log.Fatalf("cannot unmarshal data: %v", err)
 	}
-
 	//log.Println("uint8Result:", uint8Result)
 
-	if false {
-		url := parseJsonArray1(uint8Result)
-		fmt.Println("final get", url)
-	}
+	//if false {
+	//	url := parseJsonArray1(uint8Result)
+	//	fmt.Println("final get", url)
+	//}
 	{
-		retJson, flag := getDeviceName(uint8Result, "Modbus_TCP_test_device")
+		retJson, flag := getDeviceName(uint8Result, deviceName)
 		if flag != true {
 			fmt.Println("DeviceName not exist")
+			for {
+				fmt.Println("after getDeviceName")
+				time.Sleep(1000 * time.Millisecond)
+			}
 			return
 		}
 		//fmt.Println(retJson)
-		url, param, flag := filterOperator(retJson, "SwitchB")
+		url, param, flag := filterOperator(retJson, operator)
 		if flag != true {
 			fmt.Println("DeviceName not exist")
+			for {
+				fmt.Println("after filterOperator")
+				time.Sleep(1000 * time.Millisecond)
+			}
 			return
 		}
-
-		fmt.Println("rul:", url, "\t", param)
+		fmt.Println("go routine get :rul:", url, "\t", param)
 	}
-
+	for {
+		fmt.Println("end")
+		time.Sleep(1000 * time.Millisecond)
+	}
 }
 
 func parseMap(aMap map[string]interface{}) {
 	for key, value := range aMap {
-		fmt.Println(key, ":", value)
+		fmt.Println("\tread from file:", key, ":", value)
+		//fmt.Println("++++", reflect.TypeOf(value))
+
+		go OperatingPlatform("Modbus_TCP_test_device", key, reflect.ValueOf(value).String())
 	}
+	select {}
 }
 
 func main() {
@@ -214,5 +228,5 @@ func main() {
 		parseMap(m)
 	}
 
-	OperatingPlatform()
+	//OperatingPlatform("Modbus_TCP_test_device", "SwitchB", "")
 }
