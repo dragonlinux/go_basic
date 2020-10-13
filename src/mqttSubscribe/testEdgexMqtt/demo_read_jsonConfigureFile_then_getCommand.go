@@ -47,20 +47,16 @@ func thingsBoardRunCommandHandler(usernameAsToken string) {
 
 func thingsBoardOnCommandReceivedFromBroker(client mqtt.Client, message mqtt.Message) {
 	{
-		{
-			optionsReader := client.OptionsReader()
-			fmt.Println("Username:", optionsReader.Username(), "\tClientID:", optionsReader.ClientID())
-		}
-		{
-			fmt.Println(fmt.Sprintf("Send response: %s %s", message.Topic(), message.Payload()))
-		}
-		{
-			topic := "v1/devices/me/rpc/response/"
-			var qos = byte(1)
-
-			client.Publish(topic, qos, false, message)
-		}
-
+		optionsReader := client.OptionsReader()
+		fmt.Println("Username:", optionsReader.Username(), "\tClientID:", optionsReader.ClientID())
+	}
+	{
+		fmt.Println(fmt.Sprintf("Send response: %s %s", message.Topic(), message.Payload()))
+	}
+	{
+		topic := "v1/devices/me/rpc/response/" + message.Topic()[26:]
+		var qos = byte(1)
+		client.Publish(topic, qos, false, message)
 	}
 }
 
