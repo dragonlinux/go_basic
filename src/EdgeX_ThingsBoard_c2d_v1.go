@@ -78,6 +78,32 @@ func parseJsonArray1(jsonStr []uint8) (url string) {
 	return ""
 }
 
+func getDeviceName(jsonStr []uint8, deviceName string) (flag bool, retString string) {
+	var val []map[string]interface{} // <---- This must be an array to match input
+	if err := json.Unmarshal([]byte(jsonStr), &val); err != nil {
+		panic(err)
+	}
+
+	for _, content := range val {
+		if content["name"] == deviceName {
+			//fmt.Println(i, content)
+			fmt.Println(reflect.TypeOf(content))
+			fmt.Println(content["id"])
+			fmt.Println(content["name"])
+			//fmt.Println(content["commands"])
+			fmt.Println(reflect.TypeOf(content["commands"]))
+			fmt.Println("==============>")
+
+			johnJSON, err := json.Marshal(content)
+			if err != nil {
+				fmt.Println("error:", err)
+			}
+			fmt.Println("再转换成json string+++++++++>>>", string(johnJSON), err)
+		}
+	}
+	return false, ""
+}
+
 func OperatingPlatform() {
 
 	//path := "./device.json"
@@ -89,10 +115,15 @@ func OperatingPlatform() {
 	}
 
 	//log.Println("uint8Result:", uint8Result)
-	//getCommands1(uint8Result)
 
-	url := parseJsonArray1(uint8Result)
-	fmt.Println("final get", url)
+	if false {
+		url := parseJsonArray1(uint8Result)
+		fmt.Println("final get", url)
+	}
+	{
+		getDeviceName(uint8Result, "Modbus_TCP_test_device")
+	}
+
 }
 
 func parseMap(aMap map[string]interface{}) {
