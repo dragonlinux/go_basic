@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main() {
+func compareTwoString() {
 	a := "dragon"
 	b := "dragon"
 
@@ -11,4 +11,8 @@ func main() {
 	} else {
 		fmt.Println("!=")
 	}
+}
+
+func main() {
+	compareTwoString()
 }

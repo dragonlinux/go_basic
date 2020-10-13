@@ -99,7 +99,7 @@ func parseJsonArray(jsonStr []uint8) {
 	}
 }
 
-func parseJsonArray1(jsonStr []uint8) {
+func parseJsonArray1(jsonStr []uint8) (url string) {
 	var val []map[string]interface{} // <---- This must be an array to match input
 	if err := json.Unmarshal([]byte(jsonStr), &val); err != nil {
 		panic(err)
@@ -146,12 +146,15 @@ func parseJsonArray1(jsonStr []uint8) {
 							result2 := result1
 							result1 = gjson.Get(result1.String(), "url")
 							fmt.Println("url  ..........>", result1)
+							//url := result1.String()
+							_ = result1.String()
 
 							result1 = gjson.Get(result2.String(), "parameterNames")
 
 							fmt.Println("parameterNames length.>", len(result1.Array()))
 							if len(result1.Array()) == 1 {
 								fmt.Println("parameterNames.>", result1)
+								//return url
 							}
 
 							fmt.Println("")
@@ -162,6 +165,7 @@ func parseJsonArray1(jsonStr []uint8) {
 			}
 		}
 	}
+	return ""
 }
 
 func DoFiledAndMethod(input interface{}) {
@@ -203,7 +207,8 @@ func OperatingPlatform1() {
 	//log.Println("uint8Result:", uint8Result)
 	//getCommands1(uint8Result)
 
-	parseJsonArray1(uint8Result)
+	url := parseJsonArray1(uint8Result)
+	fmt.Println("final get", url)
 }
 
 func main() {
