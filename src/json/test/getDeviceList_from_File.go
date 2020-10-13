@@ -132,13 +132,16 @@ func parseJsonArray1(jsonStr []uint8) {
 				count := 0
 
 				if result.IsArray() {
-					for i, name := range result.Array() {
-						println(i, name.String())
+					for _, name := range result.Array() {
+						//println(i, name.String())
 						{
 							result1 := gjson.Get(string(name.String()), "name")
-							fmt.Println("..........>", result1)
+							fmt.Println("name ..........>", result1)
 							result1 = gjson.Get(string(name.String()), "put")
-							fmt.Println("..........>", result1)
+							//fmt.Println("put  ..........>", result1)
+							//fmt.Println(reflect.TypeOf(result1))
+							result1 = gjson.Get(result1.String(), "url")
+							fmt.Println("url  ..........>", result1)
 						}
 						count++
 					}
