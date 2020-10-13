@@ -98,7 +98,9 @@ func getDeviceName(jsonStr []uint8, deviceName string) (flag bool, retString str
 			if err != nil {
 				fmt.Println("error:", err)
 			}
-			fmt.Println("再转换成json string+++++++++>>>", string(johnJSON), err)
+			//fmt.Println("再转换成json string+++++++++>>>", string(johnJSON), err)
+
+			return true, string(johnJSON)
 		}
 	}
 	return false, ""
@@ -121,7 +123,13 @@ func OperatingPlatform() {
 		fmt.Println("final get", url)
 	}
 	{
-		getDeviceName(uint8Result, "Modbus_TCP_test_device")
+		flag, retJson := getDeviceName(uint8Result, "Modbus_TCP_test_device")
+		if flag != true {
+			fmt.Println("parse failed")
+		}
+
+		fmt.Println(retJson)
+
 	}
 
 }
