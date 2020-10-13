@@ -105,9 +105,12 @@ func parseJsonArray1(jsonStr []uint8) {
 		panic(err)
 	}
 
-	for i, content := range val {
-		if i == 0 {
-			fmt.Println(i, content)
+	for _, content := range val {
+		DeviceNames := "Modbus_TCP_test_device"
+		//DeviceNames := "Random-Integer-Generator01"
+
+		if content["name"] == DeviceNames {
+			//fmt.Println(i, content)
 			fmt.Println(reflect.TypeOf(content))
 			fmt.Println(content["id"])
 			fmt.Println(content["name"])
@@ -119,7 +122,7 @@ func parseJsonArray1(jsonStr []uint8) {
 			if err != nil {
 				fmt.Println("error:", err)
 			}
-			fmt.Println("+++++++++>>>", string(johnJSON), err)
+			//fmt.Println("再转换成json string+++++++++>>>", string(johnJSON), err)
 			{
 				result := gjson.Get(string(johnJSON), "commands")
 
@@ -132,10 +135,10 @@ func parseJsonArray1(jsonStr []uint8) {
 					for i, name := range result.Array() {
 						println(i, name.String())
 						{
-							result1 :=gjson.Get(string(name.String()), "name")
-							fmt.Println("..........>",result1)
-							result1 =gjson.Get(string(name.String()), "put")
-							fmt.Println("..........>",result1)
+							result1 := gjson.Get(string(name.String()), "name")
+							fmt.Println("..........>", result1)
+							result1 = gjson.Get(string(name.String()), "put")
+							fmt.Println("..........>", result1)
 						}
 						count++
 					}
