@@ -106,15 +106,13 @@ func getDeviceName(jsonStr []uint8, deviceName string) (retString string, flag b
 	return "", false
 }
 
-func filterOperator(jsonStr string, filterString string) (url string, flag bool) {
+func filterOperator(jsonStr string, filterString string) (url string, param string, flag bool) {
 	//fmt.Println("filterOperator ", jsonStr)
 	{
 		result := gjson.Get(string(jsonStr), "commands")
 
 		fmt.Println(reflect.TypeOf(result))
 		fmt.Println(result.IsArray())
-
-		count := 0
 
 		if result.IsArray() {
 			for _, name := range result.Array() {
@@ -140,19 +138,19 @@ func filterOperator(jsonStr string, filterString string) (url string, flag bool)
 						fmt.Println("parameterNames length.>", len(result1.Array()))
 						if len(result1.Array()) == 1 {
 							fmt.Println("parameterNames.>", result1)
-							return url, true
+							for i, r := range result1.Array() {
+								fmt.Println(i, r, reflect.TypeOf(r.String()))
+								return url, r.String(), true
+							}
+							//param := result1.Array()[0]
 						}
-
-						return "", false
-
 						fmt.Println("")
 					}
 				}
-				count++
 			}
 		}
 	}
-	return "", false
+	return "", "", false
 }
 
 func OperatingPlatform() {
@@ -178,13 +176,13 @@ func OperatingPlatform() {
 			return
 		}
 		//fmt.Println(retJson)
-		url, flag := filterOperator(retJson, "SwitchB")
+		url, param, flag := filterOperator(retJson, "SwitchB")
 		if flag != true {
 			fmt.Println("DeviceName not exist")
 			return
 		}
 
-		fmt.Println("rul:", url)
+		fmt.Println("rul:", url, "\t", param)
 	}
 
 }
