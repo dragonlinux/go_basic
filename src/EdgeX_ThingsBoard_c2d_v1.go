@@ -78,6 +78,23 @@ func parseJsonArray1(jsonStr []uint8) (url string) {
 	return ""
 }
 
+func OperatingPlatform() {
+
+	//path := "./device.json"
+	path := "./device_multi_array.json"
+
+	uint8Result, err := ioutil.ReadFile(path)
+	if err != nil {
+		log.Fatalf("cannot unmarshal data: %v", err)
+	}
+
+	//log.Println("uint8Result:", uint8Result)
+	//getCommands1(uint8Result)
+
+	url := parseJsonArray1(uint8Result)
+	fmt.Println("final get", url)
+}
+
 func parseMap(aMap map[string]interface{}) {
 	for key, value := range aMap {
 		fmt.Println(key, ":", value)
@@ -104,4 +121,6 @@ func main() {
 
 		parseMap(m)
 	}
+
+	OperatingPlatform()
 }
