@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/eclipse/paho.mqtt.golang"
 	"github.com/tidwall/gjson"
+	http2 "go_basic/http"
 	"go_basic/mymqtt"
 	"io/ioutil"
 	"log"
@@ -155,7 +156,16 @@ func thingsBoardOnCommandReceivedFromBroker(client mqtt.Client, message mqtt.Mes
 		var qos = byte(1)
 		client.Publish(topic, qos, false, message)
 	}
-	{
+
+	var mapValueFromThingsBoard map[string]interface{}
+	//使用 json.Unmarshal(data []byte, v interface{})进行转换,返回 error 信息
+	if err := json.Unmarshal([]byte(message.Payload()), &mapValueFromThingsBoard); err != nil {
+		fmt.Println(err)
+	}
+
+	if mapValueFromThingsBoard["method"] == "setValue" {
+		//fmt.Println(mapValueFromThingsBoard["params"])
+
 		operator, _ := getKeyFromValue(optionsReader.Username())
 		fmt.Println("operator:", operator) // this is the operator that I want to tell edgex
 
@@ -182,9 +192,10 @@ func thingsBoardOnCommandReceivedFromBroker(client mqtt.Client, message mqtt.Mes
 				return
 			}
 			fmt.Println("go routine get :rul:", url, "\tparam:", param)
-			//createKeyValueJson(param,)
+			prepareSendValue := createKeyValueJson(param, mapValueFromThingsBoard["params"])
+			fmt.Println(prepareSendValue)
+			http2.SendPut(url, prepareSendValue)
 		}
-
 	}
 }
 
