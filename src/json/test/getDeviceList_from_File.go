@@ -106,8 +106,8 @@ func parseJsonArray1(jsonStr []uint8) {
 	}
 
 	for _, content := range val {
-		DeviceNames := "Modbus_TCP_test_device"
-		//DeviceNames := "Random-Integer-Generator01"
+		//DeviceNames := "Modbus_TCP_test_device"
+		DeviceNames := "Random-Integer-Generator01"
 
 		if content["name"] == DeviceNames {
 			//fmt.Println(i, content)
@@ -143,11 +143,13 @@ func parseJsonArray1(jsonStr []uint8) {
 
 							//fmt.Println(reflect.TypeOf(result1))
 
+							result2 := result1
 							result1 = gjson.Get(result1.String(), "url")
 							fmt.Println("url  ..........>", result1)
 
-							//result1 = gjson.Get(result1.String(), "parameterNames")
-							//fmt.Println("parameterNames.>", result1)
+							result1 = gjson.Get(result2.String(), "parameterNames")
+							fmt.Println("parameterNames.>", result1)
+							fmt.Println("")
 						}
 						count++
 					}
