@@ -139,7 +139,7 @@ func OperatingPlatform(deviceName string, operator string, token string) {
 		fmt.Println("go routine get :rul:", url, "\t", param)
 	}
 	for {
-		fmt.Println("end")
+		//fmt.Println("end")
 		time.Sleep(1000 * time.Millisecond)
 	}
 }
