@@ -15,6 +15,34 @@ import (
 	"time"
 )
 
+func CreateMqttClientPublish(clientID string, uri *url.URL) (mqtt.Client, error) {
+	fmt.Println(fmt.Sprintf("Create MQTT client and connection: uri=%v clientID=%v ", uri.String(), clientID))
+	opts := mqtt.NewClientOptions()
+	opts.AddBroker(fmt.Sprintf("%s://%s", uri.Scheme, uri.Host))
+	opts.SetClientID(clientID)
+	opts.SetUsername(uri.User.Username())
+	password, _ := uri.User.Password()
+	opts.SetPassword(password)
+
+	//opts.SetConnectionLostHandler(func(client mqtt.Client, e error) {
+	//	fmt.Println(fmt.Sprintf("Connection lost : %v", e))
+	//	token := client.Connect()
+	//	if token.Wait() && token.Error() != nil {
+	//		fmt.Println(fmt.Sprintf("Reconnection failed : %v", e))
+	//	} else {
+	//		fmt.Println(fmt.Sprintf("Reconnection sucessful : %v", e))
+	//	}
+	//})
+
+	client := mqtt.NewClient(opts)
+	token := client.Connect()
+	if token.Wait() && token.Error() != nil {
+		return client, token.Error()
+	}
+
+	return client, nil
+}
+
 func getHttpRes(url string) []uint8 {
 	resp, err := http.Get(url)
 
@@ -153,6 +181,33 @@ func thingsBoardOnCommandReceivedFromBroker(client mqtt.Client, message mqtt.Mes
 	}
 	{
 		topic := "v1/devices/me/rpc/response/" + message.Topic()[26:]
+
+		{
+			//var brokerUrl = "demo_thingsboard.com"
+			////var brokerUrl = "192.168.1.78"
+			//var brokerPort = 1883
+			//var username = optionsReader.Username()
+			//var password = ""
+			//var mqttClientId = ""
+			//var qos = byte(1)
+			//var topic = topic
+			//
+			//uri := &url.URL{
+			//	Scheme: "tcp",
+			//	Host:   fmt.Sprintf("%s:%d", brokerUrl, brokerPort),
+			//	User:   url.UserPassword(username, password),
+			//}
+			//
+			//client, err := CreateMqttClientPublish(mqttClientId, uri)
+			//defer client.Disconnect(5000)
+			//if err != nil {
+			//	fmt.Println(err)
+			//}
+			//
+			////for {
+			//client.Publish(topic, qos, false, message.Payload())
+		}
+
 		var qos = byte(1)
 		client.Publish(topic, qos, false, message)
 	}
