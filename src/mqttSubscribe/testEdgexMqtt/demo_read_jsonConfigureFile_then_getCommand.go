@@ -261,6 +261,7 @@ func parseMap(aMap map[string]interface{}) {
 }
 
 func operator() {
+	//c2d 只能放执行器
 	yamlFile, err := ioutil.ReadFile("./src/thingsboard_provide.json")
 	if err != nil {
 		log.Fatalf("cannot unmarshal data: %v", err)
