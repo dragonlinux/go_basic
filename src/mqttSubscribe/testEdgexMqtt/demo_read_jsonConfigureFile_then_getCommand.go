@@ -278,7 +278,7 @@ func createKeyValueJson(keyStr string, in interface{}) string {
 }
 
 func getKeyFromValue(gvalue string) (string, bool) {
-	yamlFile, err := ioutil.ReadFile("./src/thingsboard_provide.json")
+	yamlFile, err := ioutil.ReadFile("./src/thingsboard_actuator.json")
 	if err != nil {
 		log.Fatalf("cannot unmarshal data: %v", err)
 	}
@@ -317,7 +317,7 @@ func parseMap(aMap map[string]interface{}) {
 
 func operator() {
 	//c2d 只能放执行器
-	yamlFile, err := ioutil.ReadFile("./src/thingsboard_provide.json")
+	yamlFile, err := ioutil.ReadFile("./src/thingsboard_actuator.json")
 	if err != nil {
 		log.Fatalf("cannot unmarshal data: %v", err)
 	}

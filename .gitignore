@@ -1,3 +1,4 @@
 .idea/
 src/go.sum
 go.sum
+demo_read_jsonConfigureFile_then_getCommand

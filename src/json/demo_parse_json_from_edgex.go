@@ -156,7 +156,7 @@ func parseMap(aMap map[string]interface{}) {
 
 func main() {
 
-	yamlFile, err := ioutil.ReadFile("./src/thingsboard_provide.json")
+	yamlFile, err := ioutil.ReadFile("./src/thingsboard_actuator.json")
 	if err != nil {
 		log.Fatalf("cannot unmarshal data: %v", err)
 	}

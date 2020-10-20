@@ -134,7 +134,7 @@ func parseMap(aMap map[string]interface{}) {
 }
 
 func getKeyFromValue(gvalue string) (string, bool) {
-	yamlFile, err := ioutil.ReadFile("./src/thingsboard_provide.json")
+	yamlFile, err := ioutil.ReadFile("./src/thingsboard_actuator.json")
 	if err != nil {
 		log.Fatalf("cannot unmarshal data: %v", err)
 	}
@@ -167,7 +167,7 @@ func main() {
 		fmt.Println(ret)
 		return
 	}
-	yamlFile, err := ioutil.ReadFile("./src/thingsboard_provide.json")
+	yamlFile, err := ioutil.ReadFile("./src/thingsboard_actuator.json")
 	if err != nil {
 		log.Fatalf("cannot unmarshal data: %v", err)
 	}
