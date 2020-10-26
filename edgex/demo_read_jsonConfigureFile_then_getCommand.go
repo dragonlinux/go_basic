@@ -227,7 +227,22 @@ func thingsBoardOnCommandReceivedFromBroker(client mqtt.Client, message mqtt.Mes
 		uint8Result := getHttpRes("http://localhost:48082/api/v1/device")
 
 		{
-			retJson, flag := getDeviceName(uint8Result, "Modbus_TCP_test_device")
+			var resultInterface map[string]interface{}
+			{
+				fileJson, err := ioutil.ReadFile("./edgex/device_name.json")
+				if err != nil {
+					log.Fatalf("cannot unmarshal data: %v", err)
+				}
+
+				if err := json.Unmarshal([]byte(fileJson), &resultInterface); err != nil {
+					fmt.Println(err)
+				}
+			}
+
+			deviceName := fmt.Sprintf("%v", resultInterface["DeviceNames"])
+
+			retJson, flag := getDeviceName(uint8Result, deviceName)
+			//retJson, flag := getDeviceName(uint8Result, "Modbus_RTU_test_device_ADAM")
 			if flag != true {
 				fmt.Println("DeviceName not exist")
 				for {
