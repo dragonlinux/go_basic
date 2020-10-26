@@ -246,7 +246,7 @@ func thingsBoardOnCommandReceivedFromBroker(client mqtt.Client, message mqtt.Mes
 			if flag != true {
 				fmt.Println("DeviceName not exist")
 				for {
-					fmt.Println("after getDeviceName")
+					fmt.Print(".")
 					time.Sleep(1000 * time.Millisecond)
 				}
 				return
