@@ -70,6 +70,33 @@ func parseL2(input []byte) {
 
 }
 
+func getDeviceNames() string {
+	fileJsonL1, err := ioutil.ReadFile("./edgex/device_names.json")
+	if err != nil {
+		log.Fatalf("cannot unmarshal data: %v", err)
+	}
+
+	//log.Println("fileJsonL1:", fileJsonL1)
+
+	var resultInterface map[string]interface{}
+	//使用 json.Unmarshal(data []byte, v interface{})进行转换,返回 error 信息
+	if err := json.Unmarshal([]byte(fileJsonL1), &resultInterface); err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(resultInterface)
+
+	fmt.Println("=============>")
+	fmt.Println(resultInterface["DeviceNames"])
+
+	deviceNames := resultInterface["DeviceNames"]
+
+	str := fmt.Sprintf("%v", deviceNames)
+	fmt.Println(str)
+
+	return str
+}
+
 func main() {
 	fileJsonL1, err := ioutil.ReadFile("./src/json/parseJson/L1.json")
 	if err != nil {
@@ -80,6 +107,7 @@ func main() {
 	parseL1(fileJsonL1)
 
 	fmt.Println("=============================== L1 over ==========================================")
+	fmt.Println("++++++>",getDeviceNames())
 
 	fileJsonL2, err := ioutil.ReadFile("./src/json/parseJson/L2.json")
 	if err != nil {

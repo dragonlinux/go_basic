@@ -73,8 +73,8 @@ func SendPut(url string, strBody string) {
 	req, _ := http.NewRequest("PUT", url, payload)
 
 	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("Authorization", "xxx")
-	req.Header.Add("Date", "Wed, 12 Sep 2018 02:10:09 GMT")
+	//req.Header.Add("Authorization", "xxx")
+	//req.Header.Add("Date", "Wed, 12 Sep 2018 02:10:09 GMT")
 
 	res, _ := http.DefaultClient.Do(req)
 

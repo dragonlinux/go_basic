@@ -173,6 +173,33 @@ func thingsBoardRunCommandHandler(usernameAsToken string) {
 	select {}
 }
 
+func getDeviceNames() string {
+	fileJsonL1, err := ioutil.ReadFile("./edgex/device_name.json")
+	if err != nil {
+		log.Fatalf("cannot unmarshal data: %v", err)
+	}
+
+	//log.Println("fileJsonL1:", fileJsonL1)
+
+	var resultInterface map[string]interface{}
+	//使用 json.Unmarshal(data []byte, v interface{})进行转换,返回 error 信息
+	if err := json.Unmarshal([]byte(fileJsonL1), &resultInterface); err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(resultInterface)
+
+	fmt.Println("=============>")
+	fmt.Println(resultInterface["DeviceNames"])
+
+	deviceNames := resultInterface["DeviceNames"]
+
+	str := fmt.Sprintf("%v", deviceNames)
+	fmt.Println(str)
+
+	return str
+}
+
 func thingsBoardOnCommandReceivedFromBroker(client mqtt.Client, message mqtt.Message) {
 	optionsReader := client.OptionsReader()
 	{
@@ -227,20 +254,7 @@ func thingsBoardOnCommandReceivedFromBroker(client mqtt.Client, message mqtt.Mes
 		uint8Result := getHttpRes("http://localhost:48082/api/v1/device")
 
 		{
-			var resultInterface map[string]interface{}
-			{
-				fileJson, err := ioutil.ReadFile("./edgex/device_name.json")
-				if err != nil {
-					log.Fatalf("cannot unmarshal data: %v", err)
-				}
-
-				if err := json.Unmarshal([]byte(fileJson), &resultInterface); err != nil {
-					fmt.Println(err)
-				}
-			}
-
-			deviceName := fmt.Sprintf("%v", resultInterface["DeviceNames"])
-
+			deviceName := getDeviceNames()
 			retJson, flag := getDeviceName(uint8Result, deviceName)
 			//retJson, flag := getDeviceName(uint8Result, "Modbus_RTU_test_device_ADAM")
 			if flag != true {
