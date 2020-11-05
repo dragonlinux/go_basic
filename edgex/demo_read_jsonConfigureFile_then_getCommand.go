@@ -226,10 +226,13 @@ func thingsBoardOnCommandReceivedFromBroker(client mqtt.Client, message mqtt.Mes
 
 		uint8Result := getHttpRes("http://localhost:48082/api/v1/device")
 
+		fmt.Println(string(uint8Result))
+
 		{
 			var resultInterface map[string]interface{}
 			{
-				fileJson, err := ioutil.ReadFile("./edgex/device_name.json")
+				fileJson, err := ioutil.ReadFile("./edgex/res/device_name.json")
+				fmt.Println(string(fileJson))
 				if err != nil {
 					log.Fatalf("cannot unmarshal data: %v", err)
 				}
@@ -244,7 +247,7 @@ func thingsBoardOnCommandReceivedFromBroker(client mqtt.Client, message mqtt.Mes
 			retJson, flag := getDeviceName(uint8Result, deviceName)
 			//retJson, flag := getDeviceName(uint8Result, "Modbus_RTU_test_device_ADAM")
 			if flag != true {
-				fmt.Println("DeviceName not exist")
+				fmt.Println("DeviceName not exist:", deviceName)
 				for {
 					fmt.Print(".")
 					time.Sleep(1000 * time.Millisecond)
@@ -254,7 +257,7 @@ func thingsBoardOnCommandReceivedFromBroker(client mqtt.Client, message mqtt.Mes
 			//fmt.Println(retJson)
 			url, param, flag := filterOperator(retJson, operator)
 			if flag != true {
-				fmt.Println("DeviceName not exist")
+				fmt.Println("DeviceName not exist:", deviceName)
 				for {
 					fmt.Println("after filterOperator")
 					time.Sleep(1000 * time.Millisecond)
@@ -293,7 +296,7 @@ func createKeyValueJson(keyStr string, in interface{}) string {
 }
 
 func getKeyFromValue(gvalue string) (string, bool) {
-	yamlFile, err := ioutil.ReadFile("./edgex/thingsboard_actuator.json")
+	yamlFile, err := ioutil.ReadFile("./edgex/res/thingsboard_actuator.json")
 	if err != nil {
 		log.Fatalf("cannot unmarshal data: %v", err)
 	}
@@ -332,7 +335,7 @@ func parseMap(aMap map[string]interface{}) {
 
 func operator() {
 	//c2d 只能放执行器
-	yamlFile, err := ioutil.ReadFile("./edgex/thingsboard_actuator.json")
+	yamlFile, err := ioutil.ReadFile("./edgex/res/thingsboard_actuator.json")
 	if err != nil {
 		log.Fatalf("cannot unmarshal data: %v", err)
 	}
