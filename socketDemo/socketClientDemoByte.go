@@ -400,17 +400,19 @@ func forEdgeXSimply() {
 
 	connEdgex.Close()
 
-	fmt.Print("xSymbol: " + hex.EncodeToString(buffRec[5:6]) + "\n")
-	fmt.Print("x: " + hex.EncodeToString(buffRec[6:8]) + "\n")
+	{
+		fmt.Print("xSymbol: " + hex.EncodeToString(buffRec[5:6]) + "\n")
+		fmt.Print("x: " + hex.EncodeToString(buffRec[6:8]) + "\n")
 
-	x := BCD2Int(buffRec[6:8])
-	fmt.Println("BCD2Int x :", x)
+		x := BCD2Int(buffRec[6:8])
+		fmt.Println("BCD2Int x :", x)
 
-	fmt.Print("ySymbol: " + hex.EncodeToString(buffRec[8:9]) + "\n")
-	fmt.Print("y: " + hex.EncodeToString(buffRec[9:11]) + "\n")
+		fmt.Print("ySymbol: " + hex.EncodeToString(buffRec[8:9]) + "\n")
+		fmt.Print("y: " + hex.EncodeToString(buffRec[9:11]) + "\n")
 
-	y := BCD2Int(buffRec[9:11])
-	fmt.Println("BCD2Int y :", y)
+		y := BCD2Int(buffRec[9:11])
+		fmt.Println("BCD2Int y :", y)
+	}
 }
 
 func main() {
