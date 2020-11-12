@@ -402,12 +402,22 @@ func forEdgeXSimply() {
 
 	{
 		fmt.Print("xSymbol: " + hex.EncodeToString(buffRec[5:6]) + "\n")
+		if bytes.Equal(buffRec[5:6], []byte{0x10}) {
+			fmt.Println(">>>>>>> x+")
+		} else {
+			fmt.Println(">>>>>>> x-")
+		}
 		fmt.Print("x: " + hex.EncodeToString(buffRec[6:8]) + "\n")
 
 		x := BCD2Int(buffRec[6:8])
 		fmt.Println("BCD2Int x :", x)
 
 		fmt.Print("ySymbol: " + hex.EncodeToString(buffRec[8:9]) + "\n")
+		if bytes.Equal(buffRec[8:9], []byte{0x10}) {
+			fmt.Println(">>>>>>> y +")
+		} else {
+			fmt.Println(">>>>>>> y -")
+		}
 		fmt.Print("y: " + hex.EncodeToString(buffRec[9:11]) + "\n")
 
 		y := BCD2Int(buffRec[9:11])
