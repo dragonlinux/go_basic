@@ -185,7 +185,7 @@ func onCommandReceivedFromBroker(client mqtt.Client, message mqtt.Message) {
 
 	//fmt.Println(string(uint8Result))
 	{
-		deviceName := "Modbus_RTU_device_ADAM4150_执行器"
+		deviceName := "SerialServer"
 		retJson, flag := getDeviceName(uint8Result, deviceName)
 		//retJson, flag := getDeviceName(uint8Result, "Modbus_RTU_test_device_ADAM")
 		if flag != true {
@@ -230,7 +230,7 @@ func onCommandReceivedFromBrokerSwitchB(client mqtt.Client, message mqtt.Message
 
 	//fmt.Println(string(uint8Result))
 	{
-		deviceName := "Modbus_RTU_device_ADAM4150_执行器"
+		deviceName := "SerialServer"
 		retJson, flag := getDeviceName(uint8Result, deviceName)
 		//retJson, flag := getDeviceName(uint8Result, "Modbus_RTU_test_device_ADAM")
 		if flag != true {
