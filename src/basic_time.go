@@ -16,8 +16,16 @@ func hello() {
 		time.Sleep(1000 * time.Millisecond)
 	}
 }
+func timeStamp() {
+	t := time.Now() //It will return time.Time object with current timestamp
+
+	tUnixMilli := int64(time.Nanosecond) * t.UnixNano() / int64(time.Millisecond)
+	fmt.Printf("timeUnixMilli: %d\n", tUnixMilli)
+}
+
 func main() {
 	start := time.Now()
+	timeStamp()
 
 	go hello()
 	go hello()
