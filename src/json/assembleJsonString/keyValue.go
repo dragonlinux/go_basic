@@ -40,7 +40,9 @@ func createKeyValueJson(keyStr string, in interface{}) string {
 	}
 	//fmt.Printf("\n%#v\n", mapString)
 
-	jsonString, _ := json.Marshal(mapString)
+	//jsonString, _ := json.Marshal(mapString)
+	jsonString, _ := json.MarshalIndent(mapString, "", "  ")
+
 	//fmt.Println(string(jsonString))
 	fmt.Println("=========================")
 	return string(jsonString)
@@ -55,7 +57,9 @@ func createTBAttributes() {
 	deviceList["Device B"] = voidObject
 	fmt.Println("deviceList", deviceList)
 
-	jsonString, _ := json.Marshal(deviceList)
+	//jsonString, _ := json.Marshal(deviceList)
+	jsonString, _ := json.MarshalIndent(deviceList, "", "  ")
+
 	fmt.Println(string(jsonString))
 	fmt.Println("=========================")
 }
@@ -89,7 +93,9 @@ func createTBTelemetry() {
 	deviceObject["Device A"] = deviceArray
 	deviceObject["Device B"] = deviceArray
 
-	jsonString, _ = json.Marshal(deviceObject)
+	//jsonString, _ = json.Marshal(deviceObject)
+	jsonString, _ = json.MarshalIndent(deviceObject, "", "  ")
+
 	fmt.Println(string(jsonString))
 	fmt.Println("=========================")
 }
