@@ -7,12 +7,14 @@ import (
 )
 
 func helloWorld() {
+	fmt.Println("========================= helloWorld")
+
 	id := [5]string{"1", "2", "3", "4", "5"}
 	name := [5]string{"A", "B", "C", "D", "E"}
 
 	parseData := make([]map[string]interface{}, 0, 0)
 
-	for counter, _ := range id {
+	for counter := range id {
 		var singleMap = make(map[string]interface{})
 		singleMap["id"] = id[counter]
 		singleMap["name"] = name[counter]
@@ -20,9 +22,11 @@ func helloWorld() {
 	}
 	b, _ := json.Marshal(parseData)
 	fmt.Println(string(b))
+	fmt.Println("=========================")
 }
 
 func createKeyValueJson(keyStr string, in interface{}) string {
+	fmt.Println("========================= createKeyValueJson")
 	data := make(map[string]interface{})
 
 	//key := "SwitchB"
@@ -43,12 +47,13 @@ func createKeyValueJson(keyStr string, in interface{}) string {
 	//jsonString, _ := json.Marshal(mapString)
 	jsonString, _ := json.MarshalIndent(mapString, "", "  ")
 
-	//fmt.Println(string(jsonString))
+	fmt.Println(string(jsonString))
 	fmt.Println("=========================")
 	return string(jsonString)
 }
 
 func createTBAttributes() {
+	fmt.Println("========================= createTBAttributes")
 
 	voidObject := make(map[string]interface{})
 
@@ -65,6 +70,7 @@ func createTBAttributes() {
 }
 
 func createTBTelemetry() {
+	fmt.Println("========================= createTBTelemetry")
 
 	valuesContent := make(map[string]interface{})
 	valuesContent["temperature"] = 123
