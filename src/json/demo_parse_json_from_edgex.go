@@ -144,7 +144,7 @@ func OperatingPlatform(deviceName string, operator string, token string) {
 	}
 }
 
-func parseMap(aMap map[string]interface{}) {
+func parseMapEdgex(aMap map[string]interface{}) {
 	for key, value := range aMap {
 		fmt.Println("\tread from file:", key, ":", value)
 		//fmt.Println("++++", reflect.TypeOf(value))
@@ -171,7 +171,7 @@ func main() {
 			panic(err)
 		}
 
-		parseMap(m)
+		parseMapEdgex(m)
 	}
 
 }
