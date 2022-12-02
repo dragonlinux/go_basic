@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/eclipse/paho.mqtt.golang"
 	"net/url"
+	//"time"
 )
 
 func CreateMqttClientSubscribe(clientID string, uri *url.URL) (mqtt.Client, error) {
@@ -19,6 +20,7 @@ func CreateMqttClientSubscribe(clientID string, uri *url.URL) (mqtt.Client, erro
 	opts.SetConnectionLostHandler(func(client mqtt.Client, e error) {
 		fmt.Println(fmt.Sprintf("Connection lost : %v", e))
 		token := client.Connect()
+
 		if token.Wait() && token.Error() != nil {
 			fmt.Println(fmt.Sprintf("Reconnection failed : %v", e))
 		} else {
@@ -37,15 +39,18 @@ func CreateMqttClientSubscribe(clientID string, uri *url.URL) (mqtt.Client, erro
 
 func runCommandHandler(i int) {
 
-	//var brokerUrl = "192.168.1.72"
-	var brokerUrl = "52.130.92.191"
+	var brokerUrl = "192.168.1.190"
+	//var brokerUrl = "52.130.92.191"
 
 	var brokerPort = 1883
-	var username = "admin"
-	var password = "public"
+	var username = "a"
+	var password = "b"
+    //var username = "admin"
+	//var password = "public"
 	//var mqttClientId = "sub"
 	var qos = 1
-	var topic = "DataTopic"
+	//var topic = "DataTopic"
+	var topic = "t"
 
 	uri := &url.URL{
 		Scheme: "tcp",
@@ -80,7 +85,7 @@ func onCommandReceivedFromBroker(client mqtt.Client, message mqtt.Message) {
 	}
 	//var request map[string]interface{}
 
-	var topic = "DataTopic"
+	var topic = "t"
 	var qos = byte(1)
 	content := "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
 		"11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
@@ -105,9 +110,11 @@ func onCommandReceivedFromBroker(client mqtt.Client, message mqtt.Message) {
 
 //以下两种情况皆有问题,so goroutine negative.
 func operator() {
-	for i := 0; i < 1024*2; i++ {
+	for i := 0; i < 128*6; i++ {
 		fmt.Println("--->", i)
 		go runCommandHandler(i)
+		//time.Sleep(500 * time.Millisecond)
+
 	}
 	select {}
 }
@@ -115,5 +122,7 @@ func operator() {
 func main() {
 	//mosquitto_pub -h 192.168.1.190 -t "DataTopic" -m "Hello MQTT1"
 	//mosquitto_sub -h 192.168.1.190 -t "DataTopic" -v
+	//mosquitto_pub -h 52.130.92.191 -t "DataTopic" -m "from client"
+
 	operator()
 }
